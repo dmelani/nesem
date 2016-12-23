@@ -3,6 +3,8 @@ CC=clang
 CFLAGS=-c -Wall -Werror
 
 SOURCES+=nesem.c
+SOURCES+=util.c
+SOURCES+=cpu.c
 
 OBJECTS=$(patsubst %.c,%.o,$(SOURCES))
 
