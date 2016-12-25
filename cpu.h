@@ -1,5 +1,6 @@
 #pragma once
 #include <stdint.h>
+#include "mapper.h"
 
 typedef struct {
 	uint16_t pc;	// Program counter
@@ -18,7 +19,8 @@ typedef struct {
 #define CPU_FLAG_N 1 << 7 // Sign
 	uint8_t p;	// Flags
 
-	char *ram;
+	uint8_t *ram;
+	mapper *mapper;
 } cpu;
 
 cpu * cpu_create();

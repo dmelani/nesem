@@ -5,6 +5,7 @@ CFLAGS=-c -Wall -Werror
 SOURCES+=nesem.c
 SOURCES+=util.c
 SOURCES+=cpu.c
+SOURCES+=mapper.c
 
 OBJECTS=$(patsubst %.c,%.o,$(SOURCES))
 
