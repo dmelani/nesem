@@ -55,12 +55,14 @@ mapper_create(uint8_t *memory) {
 	return map;
 }
 
-uint8_t mapper_read(uint16_t address) {
+uint8_t
+mapper_read(uint16_t address) {
 	// TODO - Implement different mappers
 	return 0;
 }
 
-const char *mapper_type_name(uint8_t type) {
+const char *
+mapper_type_name(uint8_t type) {
 	const struct mapper_types *cur = NULL;
 	for(cur = MAPPER_TYPES; type != cur->type && cur->type != 0xff; cur++);
 	return cur->name;
