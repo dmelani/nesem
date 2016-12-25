@@ -6,7 +6,8 @@
 #include "cartridge.h"
 #include "util.h"
 
-cartridge *cartridge_load(const char *filename) {
+cartridge *
+cartridge_load(const char *filename) {
 	FILE *fp = fopen(filename, "r");
 	cartridge *cart = NULL;
 	if (fp == NULL) {
@@ -58,7 +59,8 @@ cartridge *cartridge_load(const char *filename) {
 	return cart;
 }
 
-void cartridge_destroy(cartridge *cart) {
+void
+cartridge_destroy(cartridge *cart) {
 	if (cart) {
 		free(cart->vrom_banks);
 		free(cart->rom_banks);

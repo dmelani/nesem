@@ -1,3 +1,4 @@
+#pragma once
 #include "cpu.h"
 
 #define TRAINER_SIZE 0x200
