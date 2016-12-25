@@ -33,6 +33,12 @@ cartridge *cartridge_load(const char *filename) {
 		printf("#RAM banks: %hhd\n", cart->no_ram_banks);
 		printf("%s\n", cart->pal ? "PAL" : "NTSC");
 		printf("Are zero-bytes zero? %s\n", !memcmp(cart->zeros,"\0\0\0\0\0\0",6) ? "yes" : "no");
+		if (cart->cb1 & 4) {
+			printf("Reading trainer...\n");
+			cart->trainer = xmalloc(TRAINER_SIZE);
+			printf("Read %zu bytes from .nes-file.\n",
+					fread(cart->trainer, 1, TRAINER_SIZE, fp));
+		}
 		if (cart->no_rom_banks) {
 			printf("Reading %d ROM bank%s...\n", cart->no_rom_banks, cart->no_rom_banks == 1 ? "" : "s");
 			cart->rom_banks = xmalloc(ROM_BANK_SIZE * cart->no_rom_banks);
