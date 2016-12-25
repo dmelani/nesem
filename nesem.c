@@ -26,7 +26,7 @@ main(int argc, char *argv[]) {
 				fprintf(stderr, "Not a valid .nes-file.\n");
 				return EXIT_FAILURE;
 			} else {
-				int mapper_type = cart[7] & 0xf0 + cart[6] & 0xf;
+				int mapper_type = (cart[7] & 0xf0) + ((cart[6] & 0xf0) >> 4);
 				printf("#ROM banks: %hhd, #VROM banks: %hhd\n", cart[4], cart[5]);
 				printf("%sal mirroring.\n", cart[6] & 1 ? "Vertic" : "Horizont");
 				printf("Battery-backed RAM: %s\n", cart[6] & 2 ? "yes" : "no");
