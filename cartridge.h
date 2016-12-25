@@ -1,6 +1,6 @@
 #include "cpu.h"
 
-#define ROM_BANK_SIZE 0x200
+#define TRAINER_SIZE 0x200
 typedef char trainer[TRAINER_SIZE];
 
 #define ROM_BANK_SIZE 0x4000
