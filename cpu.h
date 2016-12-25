@@ -19,7 +19,7 @@ typedef struct {
 #define CPU_FLAG_N 1 << 7 // Sign
 	uint8_t p;	// Flags
 
-	uint8_t *ram;
+	uint8_t *mem;
 	mapper *mapper;
 } cpu;
 

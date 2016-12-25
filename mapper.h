@@ -6,4 +6,4 @@ typedef struct {
 } mapper;
 
 mapper * mapper_create(uint8_t *memory);
-uint8_t mapper_read(uint16_t *address);
+uint8_t mapper_read(uint16_t address);
