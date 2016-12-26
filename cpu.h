@@ -20,9 +20,9 @@ typedef struct {
 	uint8_t p;	// Flags
 
 	uint8_t *mem;
-	mapper *mapper;
+	mapper *mapper;	
 } cpu;
 
-cpu * cpu_create();
+cpu * cpu_create(mapper *mapper);
 void cpu_destroy(cpu*);
 void cpu_reset(cpu*);
