@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <stdio.h>
 
 #include "mapper.h"
@@ -21,6 +22,15 @@ write(mapper *mapper, uint16_t address, uint8_t data) {
 	return;
 }
 
+static void
+destroy(mapper *mapper) {
+	/* Don't free cart. Not owned by us. */
+	nrom_mapper *state = (nrom_mapper *) mapper;
+
+	printf("Destroying NROM mapper\n");
+	free(state);
+}
+
 mapper *
 mapper_nrom_create(cartridge *cart) {
 	printf("Creating NROM mapper\n");
@@ -28,6 +38,7 @@ mapper_nrom_create(cartridge *cart) {
 
 	nrom->mapper.read = read;
 	nrom->mapper.write = write;
+	nrom->mapper.destroy = destroy;
 	nrom->cart = cart;
 
 	return &nrom->mapper;

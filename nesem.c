@@ -27,6 +27,7 @@ main(int argc, char *argv[]) {
 	cpu *cpu = cpu_create(mapper);
 
 	cpu_destroy(cpu);
+	mapper->destroy(mapper);
 	cartridge_destroy(cart);
 
 	return EXIT_SUCCESS;
