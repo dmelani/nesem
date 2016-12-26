@@ -3,6 +3,7 @@
 #include "mapper.h"
 
 typedef struct {
+	uint64_t clock;	// Counter that keeps track of cycles
 	uint16_t pc;	// Program counter
 	uint8_t a;	// Accumulator
 	uint8_t x;	// Index X
@@ -23,6 +24,7 @@ typedef struct {
 	mapper *mapper;	
 } cpu;
 
-cpu * cpu_create(mapper *mapper);
-void cpu_destroy(cpu*);
-void cpu_reset(cpu*);
+cpu * cpu_create(mapper *);
+void cpu_destroy(cpu *);
+void cpu_reset(cpu *);
+void cpu_run(cpu *);

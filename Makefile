@@ -8,6 +8,7 @@ SOURCES+=cpu.c
 SOURCES+=mapper.c
 SOURCES+=cartridge.c
 SOURCES+=nrom.c
+SOURCES+=isa.c
 
 OBJECTS=$(patsubst %.c,%.o,$(SOURCES))
 

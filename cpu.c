@@ -1,8 +1,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <stdbool.h>
 
 #include "cpu.h"
+#include "isa.h"
 #include "util.h"
 
 #define NES_MEM_MAP_SIZE 0x10000
@@ -15,6 +17,8 @@ static void cpu_powerup(cpu *);
 static uint16_t cpu_translate_address(cpu *, uint16_t);
 static uint8_t cpu_read(cpu *, uint16_t);
 static uint16_t cpu_read_reset_vector(cpu *);
+static uint8_t cpu_advance(cpu *);
+static void cpu_tick_clock(cpu *);
 
 /* Global functions */
 cpu *
@@ -43,7 +47,59 @@ cpu_reset(cpu *c) {
 	c->pc = cpu_read_reset_vector(c);
 }
 
+void
+cpu_run(cpu *c) {
+	uint8_t opcode;
+	instruction ins;
+	addressing_mode am;
+
+	while (true) {
+		opcode = cpu_advance(c);
+		ins = isa_decode(opcode);
+		am = isa_addressing_mode(opcode);
+
+		printf("Processing instruction: %.2x -> %s\n", opcode, instruction_LUT[isa_decode(opcode)]);
+		switch (ins) {
+			case JMP:
+				{
+					uint8_t low = cpu_advance(c);
+					uint8_t high = cpu_advance(c);
+					uint16_t addr = low | (high << 8);
+					printf("JMP %0.4x : high %0.2x low %0.2x\n", addr, high, low);
+
+					if (am == ABSOLUTE_INDIRECT) {
+						low = cpu_read(c, addr);
+						high = cpu_read(c, addr+1);
+						addr = low | (high << 8);
+						printf("ABSOLUTE INDIRECT JMP %0.4x : high %0.2x low %0.2x\n", addr, high, low);
+					}
+
+					c->pc = addr;
+				}
+				break;
+			case SEI:
+				c->p |= CPU_FLAG_I;
+				cpu_tick_clock(c); /* Takes one cycle more */
+				break;
+			default:
+				printf("Not implemented: %.2x -> %s\n", opcode, instruction_LUT[isa_decode(opcode)]);
+				return;
+
+		}
+	}
+}
+
 /* Local function definitions */
+static inline uint8_t
+cpu_advance(cpu *c) {
+	return cpu_read(c, c->pc++);
+}
+
+static inline void
+cpu_tick_clock(cpu *c) {
+	// Timing and PPU handling should be handled here
+	c->clock++;
+}
 
 static void
 cpu_powerup(cpu *c) {
@@ -59,7 +115,8 @@ cpu_powerup(cpu *c) {
 	memset(c->mem, 0xFF, NES_RAM_SIZE);
 
 	c->pc = cpu_read_reset_vector(c);
-	printf("Next instruction: %.2x\n", cpu_read(c, c->pc));
+
+	c->clock = 0;
 }
 
 static inline uint16_t
@@ -102,6 +159,7 @@ cpu_translate_address(cpu *c, uint16_t address) {
 
 static uint8_t
 cpu_read(cpu *c, uint16_t address) {
+	cpu_tick_clock(c);
 	if (address >= NES_CARTRIDGE_MEMORY_SPACE_BEGIN) {
 		return c->mapper->read(c->mapper, address);
 	}

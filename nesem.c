@@ -26,6 +26,7 @@ main(int argc, char *argv[]) {
 
 	cpu *cpu = cpu_create(mapper);
 	printf("Starting execution at %x\n", cpu->pc);
+	cpu_run(cpu);
 
 	cpu_destroy(cpu);
 	mapper->destroy(mapper);
