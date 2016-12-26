@@ -2,13 +2,13 @@
 #include <stdint.h>
 
 #define TRAINER_SIZE 0x200
-typedef char trainer[TRAINER_SIZE];
+typedef uint8_t trainer[TRAINER_SIZE];
 
 #define ROM_BANK_SIZE 0x4000
-typedef char rom_bank[ROM_BANK_SIZE];
+typedef uint8_t rom_bank[ROM_BANK_SIZE];
 
 #define VROM_BANK_SIZE 0x2000
-typedef char vrom_bank[VROM_BANK_SIZE];
+typedef uint8_t vrom_bank[VROM_BANK_SIZE];
 
 typedef struct cartridge {
 	char label[4];
