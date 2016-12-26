@@ -5,9 +5,17 @@
 #include "cartridge.h"
 #include "util.h"
 
+typedef struct bank {
+	uint16_t size;
+	uint8_t *data;
+} bank;
+
 typedef struct nrom_mapper {
 	mapper mapper;
 	cartridge *cart;
+	bank ram;
+	bank lower;
+	bank upper;
 } nrom_mapper;
 
 static uint8_t
