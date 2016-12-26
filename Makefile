@@ -1,12 +1,13 @@
 PROJECT=nesem
 CC=clang
-CFLAGS=-c -Wall -Werror
+CFLAGS=-g -c -Wall -Werror
 
 SOURCES+=nesem.c
 SOURCES+=util.c
 SOURCES+=cpu.c
 SOURCES+=mapper.c
 SOURCES+=cartridge.c
+SOURCES+=nrom.c
 
 OBJECTS=$(patsubst %.c,%.o,$(SOURCES))
 
