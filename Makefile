@@ -1,6 +1,6 @@
 PROJECT=nesem
 CC=clang
-CFLAGS=-c -Wall -Werror
+CFLAGS=-g -c -Wall -Werror
 
 SOURCES+=nesem.c
 SOURCES+=util.c

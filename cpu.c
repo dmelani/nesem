@@ -102,7 +102,7 @@ cpu_translate_address(cpu *c, uint16_t address) {
 static uint8_t
 cpu_read(cpu *c, uint16_t address) {
 	if (address >= NES_CARTRIDGE_MEMORY_SPACE_BEGIN) {
-		return c->mapper->read(address);
+		return c->mapper->read(c->mapper, address);
 	}
 
 	return c->mem[cpu_translate_address(c, address)];

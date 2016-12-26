@@ -1,11 +1,12 @@
 #include "util.h"
 #include "mapper.h"
+#include "cartridge.h"
 
 /* XXX - User linker sets here instead */
 const struct mapper_types {
 	uint8_t type;
 	char *name;
-	mapper *(*create)(uint8_t *memory);
+	mapper *(*create)(cartridge *cart);
 } MAPPER_TYPES[] = {
 	{0, "No mapper", mapper_nrom_create},
 	{1, "Nintendo MMC1", NULL},
@@ -50,15 +51,15 @@ const struct mapper_types {
 };
 
 mapper *
-mapper_create(uint8_t type, uint8_t *memory) {
+mapper_create(cartridge *cart) {
 	for (const struct mapper_types *mpt = MAPPER_TYPES; mpt->type != 0xFF; mpt++) {
-		if (mpt->type == type) {
+		if (mpt->type == cart->mapper_type) {
 			if (mpt->create == NULL) {
 				printf("Mapper type %s not implemented\n", mpt->name);
 				return NULL;
 			}
 
-			return mpt->create(memory);
+			return mpt->create(cart);
 		}
 	}
 

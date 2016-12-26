@@ -1,5 +1,5 @@
 #pragma once
-#include "mapper.h"
+#include <stdint.h>
 
 #define TRAINER_SIZE 0x200
 typedef char trainer[TRAINER_SIZE];
@@ -19,10 +19,10 @@ typedef struct cartridge {
 	uint8_t no_ram_banks;
 	uint8_t pal;
 	uint8_t zeros[6];
+	uint16_t mapper_type;
 	trainer *trainer;
 	rom_bank *rom_banks;
 	vrom_bank *vrom_banks;
-	mapper *mapper;
 } cartridge;
 
 

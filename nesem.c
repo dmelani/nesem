@@ -3,6 +3,7 @@
 
 #include "cpu.h"
 #include "cartridge.h"
+#include "mapper.h"
 
 int
 main(int argc, char *argv[]) {
@@ -17,7 +18,13 @@ main(int argc, char *argv[]) {
 		return EXIT_FAILURE;
 	}
 
-	cpu *cpu = cpu_create(cart->mapper);
+	mapper *mapper = mapper_create(cart);
+	if (mapper == NULL) {
+		printf("Failed to create mapper");
+		return EXIT_FAILURE;
+	}
+
+	cpu *cpu = cpu_create(mapper);
 
 	cpu_destroy(cpu);
 	cartridge_destroy(cart);

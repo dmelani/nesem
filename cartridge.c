@@ -23,14 +23,14 @@ cartridge_load(const char *filename) {
 		free(cart);
 		return NULL;
 	} else {
-		int mapper_type = (cart->cb2 & 0xf0) + ((cart->cb1 & 0xf0) >> 4);
+		cart->mapper_type = (cart->cb2 & 0xf0) + ((cart->cb1 & 0xf0) >> 4);
 		printf("#ROM banks: %hhd, #VROM banks: %hhd\n", cart->no_rom_banks, cart->no_vrom_banks);
 		printf("%sal mirroring.\n", cart->cb1 & 1 ? "Vertic" : "Horizont");
 		printf("Battery-backed RAM: %s\n", cart->cb1 & 2 ? "yes" : "no");
 		printf("Trainer present: %s\n", cart->cb1 & 4 ? "yes" : "no");
 		printf("Four-screen VRAM layout: %s\n", cart->cb1 & 8 ? "yes" : "no");
 		printf("VS-System cartridge: %s\n", cart->cb2 & 1 ? "yes" : "no");
-		printf("ROM Mapper Type: %s (%d)\n", mapper_type_name(mapper_type), mapper_type);
+		printf("ROM Mapper Type: %d\n", cart->mapper_type);
 		printf("#RAM banks: %hhd\n", cart->no_ram_banks);
 		printf("%s\n", cart->pal ? "PAL" : "NTSC");
 		printf("Are zero-bytes zero? %s\n", !memcmp(cart->zeros,"\0\0\0\0\0\0",6) ? "yes" : "no");
@@ -53,7 +53,6 @@ cartridge_load(const char *filename) {
 					fread(cart->vrom_banks, cart->no_vrom_banks, VROM_BANK_SIZE, fp));
 		}
 	}
-
 	fclose(fp);
 
 	return cart;
