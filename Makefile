@@ -21,7 +21,7 @@ $(PROJECT): $(BUILD_DIR) $(BUILD_DIR)/$(PROJECT)
 	cp $(BUILD_DIR)/$(PROJECT) $@
 
 $(BUILD_DIR):
-	-mkdir $(BUILD_DIR)
+	@mkdir $(BUILD_DIR)
 
 $(BUILD_DIR)/$(PROJECT): $(OBJS)
 	$(CC) $^ -o $@
