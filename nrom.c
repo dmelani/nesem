@@ -41,6 +41,11 @@ destroy(mapper *mapper) {
 
 mapper *
 mapper_nrom_create(cartridge *cart) {
+	if (cart->no_rom_banks == 0) {
+		printf("No rom banks! Cannot create NROM mapper");
+		return NULL;
+	}
+
 	printf("Creating NROM mapper\n");
 	nrom_mapper *nrom = xmalloc(sizeof(*nrom));	
 
@@ -48,6 +53,17 @@ mapper_nrom_create(cartridge *cart) {
 	nrom->mapper.write = write;
 	nrom->mapper.destroy = destroy;
 	nrom->cart = cart;
+
+	nrom->lower.data = nrom->cart->rom_banks[0];
+	nrom->lower.size = ROM_BANK_SIZE;
+
+	if (nrom->cart->no_rom_banks == 1) {
+		nrom->upper.data = NULL;
+		nrom->upper.size = 0;
+	} else {
+		nrom->upper.data = nrom->cart->rom_banks[1];
+		nrom->upper.size = ROM_BANK_SIZE;
+	}
 
 	return &nrom->mapper;
 }
