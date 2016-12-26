@@ -38,7 +38,15 @@ read(mapper *mapper, uint16_t address) {
 
 static void
 write(mapper *mapper, uint16_t address, uint8_t data) {
-	//nrom_mapper *nrom = (nrom_mapper *) mapper;
+	nrom_mapper *nrom = (nrom_mapper *) mapper;
+
+	if (nrom->ram.size == 0) {
+		return;
+	}
+
+	if (address >= 0x6000 && address <= 0x7FFF) {
+		nrom->ram.data[address - 0x6000] = data;
+	}
 	return;
 }
 

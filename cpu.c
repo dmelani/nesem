@@ -59,6 +59,7 @@ cpu_powerup(cpu *c) {
 	memset(c->mem, 0xFF, NES_RAM_SIZE);
 
 	c->pc = cpu_read_reset_vector(c);
+	printf("Next instruction: %.2x\n", cpu_read(c, c->pc));
 }
 
 static inline uint16_t
