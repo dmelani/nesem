@@ -54,11 +54,12 @@ cpu_run(cpu *c) {
 	addressing_mode am;
 
 	while (true) {
+		printf("@%llu - ", c->clock);
 		opcode = cpu_advance(c);
 		ins = isa_decode(opcode);
 		am = isa_addressing_mode(opcode);
 
-		printf("Processing instruction: %.2x -> %s\n", opcode, instruction_LUT[isa_decode(opcode)]);
+		printf("Processing instruction: %.2x -> %s in addressing mode \"%s\"\n", opcode, instruction_LUT[isa_decode(opcode)], addressing_mode_LUT[am]);
 		switch (ins) {
 			case JMP:
 				{

@@ -62,6 +62,23 @@ const char *instruction_LUT[] = {
 	"TYA"
 };
 
+const char *addressing_mode_LUT[] = {
+	"Unknown",
+	"Accumulator",
+	"Immediate",
+	"Absolute",
+	"Zero page",
+	"Indexed zero page x",
+	"Indexed zero page y",
+	"Indexed absolute x",
+	"Indexed absolute y",
+	"Implied",
+	"Relative",
+	"Indexed indirect",
+	"Indirect indexed",
+	"Absolute indirect"
+};
+
 instruction
 isa_decode(uint8_t opcode) {
 	switch (opcode) {
@@ -69,6 +86,8 @@ isa_decode(uint8_t opcode) {
 			return SEI;
 		case 0x4C: case 0x6C:
 			return JMP;
+		case 0x81: case 0x85: case 0x8D: case 0x91: case 0x95: case 0x99: case 0x9D:
+			return STA;
 		default:
 			return INSTRUCTION_UNKNOWN;
 	}

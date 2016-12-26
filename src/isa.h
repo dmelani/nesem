@@ -78,6 +78,7 @@ typedef enum {
 } addressing_mode;
 
 extern const char *instruction_LUT[];
+extern const char *addressing_mode_LUT[];
 
 instruction isa_decode(uint8_t opcode);
 addressing_mode isa_addressing_mode(uint8_t opcode);
