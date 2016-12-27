@@ -1,8 +1,4 @@
 PROJECT=nesem
-CC=clang
-CFLAGS=-g -c -Wall -Werror
-BUILD_DIR=build
-SRC_DIR=src
 
 SOURCES+=util.c
 SOURCES+=nesem.c
@@ -11,6 +7,13 @@ SOURCES+=mapper.c
 SOURCES+=cartridge.c
 SOURCES+=nrom.c
 SOURCES+=isa.c
+
+BUILD_DIR=build
+INC_DIR=include
+SRC_DIR=src
+
+CC=clang
+CFLAGS=-g -c -Wall -Werror -I$(INC_DIR)
 
 OBJS=$(SOURCES:%.c=$(BUILD_DIR)/%.o)
 DEPS=$(OBJS:%.o=%.d)
