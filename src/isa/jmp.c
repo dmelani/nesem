@@ -21,19 +21,6 @@ jmp(cpu *c, addressing_mode am) {
 	c->pc = addr;
 }
 
-static instr jmp_absolute = {
-	0x4C,
-	"JMP",
-	ABSOLUTE,
-	jmp
-};
-LINKER_SET_ADD_DATA(ins, jmp_absolute);
-
-static instr jmp_absolute_indirect = {
-	0x6C,
-	"JMP",
-	ABSOLUTE_INDIRECT,
-	jmp
-};
-LINKER_SET_ADD_DATA(ins, jmp_absolute_indirect);
+ADD_INSTRUCTION(0x4C, JMP, ABSOLUTE, jmp);
+ADD_INSTRUCTION(0x6C, JMP, ABSOLUTE_INDIRECT, jmp);
 

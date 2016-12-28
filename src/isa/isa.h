@@ -1,66 +1,7 @@
 #pragma once
 #include <stdint.h>
 #include <stddef.h>
-
-typedef enum {
-	INSTRUCTION_UNKNOWN,
-	ADC,
-	AND,
-	ASL,
-	BCC,
-	BCS,
-	BEQ,
-	BIT,
-	BMI,
-	BNE,
-	BPL,
-	BRK,
-	BVC,
-	BVS,
-	CLC,
-	CLD,
-	CLI,
-	CLV,
-	CMP,
-	CPX,
-	CPY,
-	DEC,
-	DEX,
-	DEY,
-	EOR,
-	INC,
-	INX,
-	INY,
-	JMP,
-	JSR,
-	LDA,
-	LDX,
-	LDY,
-	LSR,
-	NOP,
-	ORA,
-	PHA,
-	PHP,
-	PLA,
-	PLP,
-	ROL,
-	ROR,
-	RTI,
-	RTS,
-	SBC,
-	SEC,
-	SED,
-	SEI,
-	STA,
-	STX,
-	STY,
-	TAX,
-	TAY,
-	TSX,
-	TXA,
-	TXS,
-	TYA
-} instruction;
+#include "linker_set.h"
 
 typedef enum {
 	ADDRESSING_MODE_UNKNOWN,
@@ -88,3 +29,12 @@ typedef struct instr {
 	void (*exec)(cpu *, addressing_mode);
 } instr;
 size_t isa_op_table(instr ***);
+
+#define ADD_INSTRUCTION(opcode, name, mode, func)		\
+static instr __ins_##name##_##opcode = {			\
+	opcode,	\
+	#name,	\
+	mode,	\
+	func	\
+};	\
+LINKER_SET_ADD_DATA(ins, __ins_##name##_##opcode)
