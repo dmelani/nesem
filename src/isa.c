@@ -122,19 +122,15 @@ isa_op_table(instr **table) {
 
 	printf("Setting table to unknown\n");
 	for (int i = 0; i <= UINT8_MAX; i++) {
-		printf("Setting table[%d] to unknown\n", i);
 		t[i] = &unknown_instruction;
 	}
 
-	printf("Declaring linker set\n");
 	LINKER_SET_DECLARE(ins, instr);
 	
 	instr **curr_i;
 	LINKER_SET_FOREACH(curr_i, ins) {
-		printf("Iterating over linker set, %p\n", curr_i);
-		printf("Iterating over linker set, %p\n", *curr_i);
-		//printf("Adding %s to pos %d in table", (*ins)->name, (*ins)->opcode);
-	//	t[(*derp)->opcode] = *derp;
+		printf("Adding %s to pos %d (0x%0.2x) in table\n", (*curr_i)->name, (*curr_i)->opcode, (*curr_i)->opcode);
+		t[(*curr_i)->opcode] = *curr_i;
 	}
 
 	*table = *t;
