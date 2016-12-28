@@ -7,8 +7,9 @@ SOURCES+=mapper.c
 SOURCES+=cartridge.c
 SOURCES+=nrom.c
 SOURCES+=isa/isa.c
-SOURCES+=isa/sei.c
 SOURCES+=isa/jmp.c
+SOURCES+=isa/sei.c
+SOURCES+=isa/sta.c
 
 BUILD_DIR=build
 INCLUDE=-Iinclude -Isrc

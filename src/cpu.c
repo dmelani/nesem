@@ -91,6 +91,17 @@ cpu_read(cpu *c, uint16_t address) {
 	return c->mem[cpu_translate_address(c, address)];
 }
 
+void
+cpu_write(cpu *c, uint16_t address, uint8_t data) {
+	cpu_tick_clock(c);
+	if (address >= NES_CARTRIDGE_MEMORY_SPACE_BEGIN) {
+		c->mapper->write(c->mapper, address, data);
+		return; 
+	}
+
+	c->mem[cpu_translate_address(c, address)] = data;
+}
+
 /* Local function definitions */
 
 static void
