@@ -1,4 +1,6 @@
 #pragma once
+#include <stdint.h>
+#include <stddef.h>
 
 typedef enum {
 	INSTRUCTION_UNKNOWN,
@@ -80,5 +82,14 @@ typedef enum {
 extern const char *instruction_LUT[];
 extern const char *addressing_mode_LUT[];
 
+typedef struct cpu cpu;
+typedef struct instr {
+	uint8_t opcode;
+	const char *name;
+	addressing_mode mode;
+	void (*exec)(cpu *, addressing_mode);
+} instr;
+
+size_t isa_op_table(instr ***);
 instruction isa_decode(uint8_t opcode);
 addressing_mode isa_addressing_mode(uint8_t opcode);

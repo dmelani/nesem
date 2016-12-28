@@ -15,10 +15,7 @@
 /* Local function declarations */
 static void cpu_powerup(cpu *);
 static uint16_t cpu_translate_address(cpu *, uint16_t);
-static uint8_t cpu_read(cpu *, uint16_t);
 static uint16_t cpu_read_reset_vector(cpu *);
-static uint8_t cpu_advance(cpu *);
-static void cpu_tick_clock(cpu *);
 
 /* Global functions */
 cpu *
@@ -26,6 +23,7 @@ cpu_create(mapper *mapper) {
 	cpu *c = xmalloc(sizeof(*c));	
 	c->mem  = xmalloc(NES_MEM_MAP_SIZE);
 	c->mapper = mapper;
+	c->optable_size = isa_op_table(&c->optable);
 
 	cpu_powerup(c);
 
@@ -50,57 +48,51 @@ cpu_reset(cpu *c) {
 void
 cpu_run(cpu *c) {
 	uint8_t opcode;
-	instruction ins;
-	addressing_mode am;
+	instr *ins;
 
 	while (true) {
 		printf("@%llu - ", c->clock);
 		opcode = cpu_advance(c);
-		ins = isa_decode(opcode);
-		am = isa_addressing_mode(opcode);
-
-		printf("Processing instruction: %.2x -> %s in addressing mode \"%s\"\n", opcode, instruction_LUT[isa_decode(opcode)], addressing_mode_LUT[am]);
-		switch (ins) {
-			case JMP:
-				{
-					uint8_t low = cpu_advance(c);
-					uint8_t high = cpu_advance(c);
-					uint16_t addr = low | (high << 8);
-					printf("JMP %0.4x : high %0.2x low %0.2x\n", addr, high, low);
-
-					if (am == ABSOLUTE_INDIRECT) {
-						low = cpu_read(c, addr);
-						high = cpu_read(c, addr+1);
-						addr = low | (high << 8);
-						printf("ABSOLUTE INDIRECT JMP %0.4x : high %0.2x low %0.2x\n", addr, high, low);
-					}
-
-					c->pc = addr;
-				}
-				break;
-			case SEI:
-				c->p |= CPU_FLAG_I;
-				cpu_tick_clock(c); /* Takes one cycle more */
-				break;
-			default:
-				printf("Not implemented: %.2x -> %s\n", opcode, instruction_LUT[isa_decode(opcode)]);
-				return;
-
+		
+		if (opcode >= c->optable_size) {
+			/* Should be impossible */
+			printf("Opcode out of range\n");
+			return;
 		}
+		ins = c->optable[opcode];
+		
+		printf("Processing instruction: %.2x -> %s in addressing mode \"%s\"\n", opcode, ins->name, addressing_mode_LUT[ins->mode]);
+		if (ins->exec == NULL) {
+			printf("Instruction %s with addressing mode %s not implemented\n", ins->name, addressing_mode_LUT[ins->mode]);
+			return;
+		}
+
+		ins->exec(c, ins->mode);
 	}
 }
 
-/* Local function definitions */
-static inline uint8_t
-cpu_advance(cpu *c) {
-	return cpu_read(c, c->pc++);
-}
-
-static inline void
+inline void
 cpu_tick_clock(cpu *c) {
 	// Timing and PPU handling should be handled here
 	c->clock++;
 }
+
+inline uint8_t
+cpu_advance(cpu *c) {
+	return cpu_read(c, c->pc++);
+}
+
+uint8_t
+cpu_read(cpu *c, uint16_t address) {
+	cpu_tick_clock(c);
+	if (address >= NES_CARTRIDGE_MEMORY_SPACE_BEGIN) {
+		return c->mapper->read(c->mapper, address);
+	}
+
+	return c->mem[cpu_translate_address(c, address)];
+}
+
+/* Local function definitions */
 
 static void
 cpu_powerup(cpu *c) {
@@ -156,16 +148,6 @@ cpu_translate_address(cpu *c, uint16_t address) {
 	
 	/* Should not be reached */
 	return address;
-}
-
-static uint8_t
-cpu_read(cpu *c, uint16_t address) {
-	cpu_tick_clock(c);
-	if (address >= NES_CARTRIDGE_MEMORY_SPACE_BEGIN) {
-		return c->mapper->read(c->mapper, address);
-	}
-
-	return c->mem[cpu_translate_address(c, address)];
 }
 
 static uint16_t
