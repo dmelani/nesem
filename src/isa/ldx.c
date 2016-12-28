@@ -9,7 +9,8 @@ ldx(cpu *c, addressing_mode am) {
 	uint8_t data = cpu_advance(c);
 	c->x = data;
 
-	c->p |= data & CPU_FLAG_N;
+	c->p &= ~CPU_FLAG_N; // Clear N flag
+	c->p |= data & CPU_FLAG_N; // Set N flag if x >= 128
 	if (data == 0) {
 		c->p |= CPU_FLAG_Z;
 	} else {
