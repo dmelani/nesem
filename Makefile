@@ -7,6 +7,8 @@ SOURCES+=mapper.c
 SOURCES+=cartridge.c
 SOURCES+=nrom.c
 SOURCES+=isa.c
+SOURCES+=sei.c
+SOURCES+=jmp.c
 
 BUILD_DIR=build
 INC_DIR=include

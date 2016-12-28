@@ -88,4 +88,3 @@ typedef struct instr {
 	void (*exec)(cpu *, addressing_mode);
 } instr;
 size_t isa_op_table(instr ***);
-
