@@ -14,5 +14,5 @@ sta(cpu *c, addressing_mode am) {
 	cpu_write(c, addr, c->a);
 }
 
-ADD_INSTRUCTION(0x4C, STA, ABSOLUTE, sta);
+ADD_INSTRUCTION(0x8d, STA, ABSOLUTE, sta);
 
