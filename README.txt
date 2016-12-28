@@ -7,3 +7,6 @@ A local copy os http://nesdev.com/NESDoc.pdf is kept in docs/
 
 A description of mappers can be found here:
 https://emu-docs.org/NES/Mappers/mappers.txt 
+
+Opcodes and descriptions can be found here
+http://nesdev.com/6502.txt
