@@ -4,7 +4,6 @@
 #include <stdbool.h>
 
 #include "cpu.h"
-#include "isa.h"
 #include "util.h"
 
 #define NES_MEM_MAP_SIZE 0x10000

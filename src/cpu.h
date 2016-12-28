@@ -1,6 +1,6 @@
 #pragma once
 #include <stdint.h>
-#include "isa.h"
+#include "isa/isa.h"
 #include "mapper.h"
 
 typedef struct cpu {

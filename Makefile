@@ -6,16 +6,16 @@ SOURCES+=cpu.c
 SOURCES+=mapper.c
 SOURCES+=cartridge.c
 SOURCES+=nrom.c
-SOURCES+=isa.c
-SOURCES+=sei.c
-SOURCES+=jmp.c
+SOURCES+=isa/isa.c
+SOURCES+=isa/sei.c
+SOURCES+=isa/jmp.c
 
 BUILD_DIR=build
-INC_DIR=include
+INCLUDE=-Iinclude -Isrc
 SRC_DIR=src
 
 CC=clang
-CFLAGS=-g -c -Wall -Werror -I$(INC_DIR)
+CFLAGS=-g -c -Wall -Werror $(INCLUDE)
 
 OBJS=$(SOURCES:%.c=$(BUILD_DIR)/%.o)
 DEPS=$(OBJS:%.o=%.d)
@@ -27,6 +27,7 @@ $(PROJECT): $(BUILD_DIR) $(BUILD_DIR)/$(PROJECT)
 
 $(BUILD_DIR):
 	@mkdir $(BUILD_DIR)
+	@mkdir $(BUILD_DIR)/isa
 
 $(BUILD_DIR)/$(PROJECT): $(OBJS)
 	$(CC) $^ -o $@
