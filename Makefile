@@ -12,6 +12,7 @@ SOURCES+=isa/jmp.c
 SOURCES+=isa/ldx.c
 SOURCES+=isa/sei.c
 SOURCES+=isa/sta.c
+SOURCES+=isa/txs.c
 
 BUILD_DIR=build
 INCLUDE=-Iinclude -Isrc
