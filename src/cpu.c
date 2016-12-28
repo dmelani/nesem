@@ -18,7 +18,6 @@ static uint16_t cpu_translate_address(cpu *, uint16_t);
 static uint8_t cpu_read(cpu *, uint16_t);
 static uint16_t cpu_read_reset_vector(cpu *);
 static uint8_t cpu_advance(cpu *);
-static void cpu_tick_clock(cpu *);
 
 /* Global functions */
 cpu *
@@ -26,6 +25,7 @@ cpu_create(mapper *mapper) {
 	cpu *c = xmalloc(sizeof(*c));	
 	c->mem  = xmalloc(NES_MEM_MAP_SIZE);
 	c->mapper = mapper;
+	c->optable_size = isa_op_table(&c->optable);
 
 	cpu_powerup(c);
 
@@ -90,16 +90,17 @@ cpu_run(cpu *c) {
 	}
 }
 
+inline void
+cpu_tick_clock(cpu *c) {
+	// Timing and PPU handling should be handled here
+	c->clock++;
+}
+
+
 /* Local function definitions */
 static inline uint8_t
 cpu_advance(cpu *c) {
 	return cpu_read(c, c->pc++);
-}
-
-static inline void
-cpu_tick_clock(cpu *c) {
-	// Timing and PPU handling should be handled here
-	c->clock++;
 }
 
 static void

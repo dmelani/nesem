@@ -1,6 +1,8 @@
 #include <stdint.h>
 
+#include "linker_set.h"
 #include "isa.h"
+#include "util.h"
 
 const char *instruction_LUT[] = {
 	"Unkown",
@@ -105,4 +107,36 @@ isa_addressing_mode(uint8_t opcode) {
 		default:
 			return ADDRESSING_MODE_UNKNOWN;
 	}
+}
+
+static struct instr unknown_instruction = {
+	0,
+	"Unknown",
+	ADDRESSING_MODE_UNKNOWN,
+	NULL
+};
+
+size_t
+isa_op_table(instr **table) {
+	instr **t = xmalloc(sizeof(*t) * (UINT8_MAX + 1));
+
+	printf("Setting table to unknown\n");
+	for (int i = 0; i <= UINT8_MAX; i++) {
+		printf("Setting table[%d] to unknown\n", i);
+		t[i] = &unknown_instruction;
+	}
+
+	printf("Declaring linker set\n");
+	LINKER_SET_DECLARE(ins, instr);
+	
+	instr **curr_i;
+	LINKER_SET_FOREACH(curr_i, ins) {
+		printf("Iterating over linker set, %p\n", curr_i);
+		printf("Iterating over linker set, %p\n", *curr_i);
+		//printf("Adding %s to pos %d in table", (*ins)->name, (*ins)->opcode);
+	//	t[(*derp)->opcode] = *derp;
+	}
+
+	*table = *t;
+	return UINT8_MAX + 1;
 }

@@ -1,8 +1,9 @@
 #pragma once
 #include <stdint.h>
+#include "isa.h"
 #include "mapper.h"
 
-typedef struct {
+typedef struct cpu {
 	uint64_t clock;	// Counter that keeps track of cycles
 	uint16_t pc;	// Program counter
 	uint8_t a;	// Accumulator
@@ -22,9 +23,13 @@ typedef struct {
 
 	uint8_t *mem;
 	mapper *mapper;	
+
+	instr *optable;
+	size_t optable_size;
 } cpu;
 
 cpu * cpu_create(mapper *);
 void cpu_destroy(cpu *);
 void cpu_reset(cpu *);
 void cpu_run(cpu *);
+void cpu_tick_clock(cpu *);
