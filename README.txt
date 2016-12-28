@@ -10,3 +10,4 @@ https://emu-docs.org/NES/Mappers/mappers.txt
 
 Opcodes and descriptions can be found here
 http://nesdev.com/6502.txt
+http://nesdev.com/6502_cpu.txt
