@@ -9,6 +9,7 @@ SOURCES+=nrom.c
 SOURCES+=isa/isa.c
 SOURCES+=isa/cld.c
 SOURCES+=isa/jmp.c
+SOURCES+=isa/ldx.c
 SOURCES+=isa/sei.c
 SOURCES+=isa/sta.c
 
