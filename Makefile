@@ -24,6 +24,7 @@ SOURCES+=isa/ldx.c
 SOURCES+=isa/ldy.c
 SOURCES+=isa/ora.c
 SOURCES+=isa/pha.c
+SOURCES+=isa/pla.c
 SOURCES+=isa/rts.c
 SOURCES+=isa/sei.c
 SOURCES+=isa/sta.c

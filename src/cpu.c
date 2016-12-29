@@ -195,8 +195,9 @@ cpu_translate_address(cpu *c, uint16_t address) {
 			return 0x2000 | (address & 0x7);
 		case 4: // 0x4000- 0x401F
 			// Not implemented yet
+			return 0x4000 | (address & 0x7);
 		default:
-			fprintf(stderr, "Address translation failed: %d\n", address);
+			fprintf(stderr, "Address translation failed: 0x%0.4x\n", address);
 	}
 	
 	/* Should not be reached */
