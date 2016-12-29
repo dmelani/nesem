@@ -10,7 +10,7 @@ iny(cpu *c, addressing_mode am) {
 
 	c->p &= ~CPU_FLAG_N; // Clear N flag
 	c->p |= c->y & CPU_FLAG_N; // Set N flag if x >= 128
-	if (c->x == 0) {
+	if (c->y == 0) {
 		c->p |= CPU_FLAG_Z;
 	} else {
 		c->p &= ~CPU_FLAG_Z;
