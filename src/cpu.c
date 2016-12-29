@@ -130,6 +130,21 @@ cpu_push(cpu *c, uint8_t data) {
 	c->mem[cpu_translate_address(c, c->s-- + 0x100)] = data;
 }
 
+void
+cpu_set_z(cpu *c, uint8_t data) {
+	if (data == 0) {
+		c->p |= CPU_FLAG_Z;
+	} else {
+		c->p &= ~CPU_FLAG_Z;
+	}
+}
+
+void
+cpu_set_n(cpu *c, uint8_t data) {
+	c->p &= ~CPU_FLAG_N; // Clear N flag
+	c->p |= data & CPU_FLAG_N; // Set N flag if x >= 128
+}
+
 /* Local function definitions */
 
 static void
