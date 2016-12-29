@@ -18,8 +18,12 @@ bne(cpu *c, addressing_mode am) {
 			cpu_tick_clock(c);
 
 		c->pc = rel_addr;
-		printf(" jump to 0x%0.4x\n", c->pc);
+		printf(" branch to 0x%0.4x\n", c->pc);
+
+		return;
 	}
+
+	printf("not branching\n");
 }
 
 ADD_INSTRUCTION(0xd0, BNE, RELATIVE, bne);
