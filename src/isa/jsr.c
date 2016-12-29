@@ -11,7 +11,7 @@ jsr(cpu *c, addressing_mode am) {
 	uint16_t addr = low | (high << 8);
 	uint16_t ret = c->pc - 1; // Odd, but this is what the 6502 does. Last part of https://en.wikipedia.org/wiki/MOS_Technology_6502#Bugs_and_quirks explains it
 	
-	printf("JSR Dest: 0x%0.4x Ret: 0x%0.4x\n ", addr, ret);
+	printf("\tJSR Dest: 0x%0.4x Ret: 0x%0.4x\n", addr, ret);
 
 	cpu_push(c, high);
 	cpu_push(c, low);

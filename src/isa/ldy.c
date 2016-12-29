@@ -5,9 +5,9 @@
 #include "linker_set.h"
 
 static void
-ldx(cpu *c, addressing_mode am) {
+ldy(cpu *c, addressing_mode am) {
 	uint8_t data = cpu_advance(c);
-	c->x = data;
+	c->y = data;
 
 	c->p &= ~CPU_FLAG_N; // Clear N flag
 	c->p |= data & CPU_FLAG_N; // Set N flag if x >= 128
@@ -17,8 +17,8 @@ ldx(cpu *c, addressing_mode am) {
 		c->p &= ~CPU_FLAG_Z;
 	}
 
-	printf("\tLDX: 0x%0.2x Flags: 0x%0.2x\n", data, c->p);
+	printf("\tLDY: 0x%0.2x Flags: 0x%0.2x\n", data, c->p);
 }
 
-ADD_INSTRUCTION(0xa2, LDX, IMMEDIATE, ldx);
+ADD_INSTRUCTION(0xa0, LDY, IMMEDIATE, ldy);
 

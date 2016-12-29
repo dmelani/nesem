@@ -13,6 +13,7 @@ SOURCES+=isa/jmp.c
 SOURCES+=isa/jsr.c
 SOURCES+=isa/lda.c
 SOURCES+=isa/ldx.c
+SOURCES+=isa/ldy.c
 SOURCES+=isa/sei.c
 SOURCES+=isa/sta.c
 SOURCES+=isa/stx.c
