@@ -40,6 +40,14 @@ sta_zero_page_x(cpu *c, addressing_mode am) {
 }
 
 static void
+sta_zero_page(cpu *c, addressing_mode am) {
+	uint8_t zpa = cpu_advance(c);
+
+	printf("\tSTA 0x%0.2x: A 0x%0.2x to addr 0x%0.2x\n", c->x, c->a, zpa);
+	cpu_write(c, zpa, c->a);
+}
+
+static void
 sta_absolute_x(cpu *c, addressing_mode am) {
 	uint8_t low = cpu_advance(c);
 	uint8_t high = cpu_advance(c);
@@ -54,6 +62,7 @@ sta_absolute_x(cpu *c, addressing_mode am) {
 	cpu_write(c, addr, c->a);
 }
 
+ADD_INSTRUCTION(0x85, STA, ZERO_PAGE, sta_zero_page);
 ADD_INSTRUCTION(0x8d, STA, ABSOLUTE, sta);
 ADD_INSTRUCTION(0x91, STA, INDIRECT_INDEXED, sta_indirect_indexed);
 ADD_INSTRUCTION(0x95, STA, INDEXED_ZERO_PAGE_X, sta_zero_page_x);
