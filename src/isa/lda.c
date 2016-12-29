@@ -17,7 +17,7 @@ lda(cpu *c, addressing_mode am) {
 		c->p &= ~CPU_FLAG_Z;
 	}
 
-	printf("\tLDA: 0x%0.2x Flags: 0x%2.0x\n", data, c->p);
+	printf("\tLDA: 0x%0.2x Flags: 0x%0.2x\n", data, c->p);
 }
 
 ADD_INSTRUCTION(0xa9, LDA, IMMEDIATE, lda);
