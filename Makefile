@@ -21,6 +21,7 @@ SOURCES+=isa/sei.c
 SOURCES+=isa/sta.c
 SOURCES+=isa/stx.c
 SOURCES+=isa/sty.c
+SOURCES+=isa/tax.c
 SOURCES+=isa/txs.c
 
 BUILD_DIR=build
