@@ -102,6 +102,19 @@ cpu_write(cpu *c, uint16_t address, uint8_t data) {
 	c->mem[cpu_translate_address(c, address)] = data;
 }
 
+uint16_t
+cpu_read_paged_16(cpu *c, uint16_t address) {
+	uint16_t page, offset, low, high;
+
+	page = address & ~0xFF;
+	offset = address & 0xFF;
+
+	low = cpu_read(c, page | offset++);
+	high = cpu_read(c, page | (offset & 0xFF));
+	
+	return low | (high << 8);
+}
+
 uint8_t
 cpu_pop(cpu *c) {
 	cpu_tick_clock(c);
