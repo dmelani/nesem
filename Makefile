@@ -30,6 +30,7 @@ SOURCES+=isa/sty.c
 SOURCES+=isa/tax.c
 SOURCES+=isa/tsx.c
 SOURCES+=isa/txs.c
+SOURCES+=isa/tya.c
 
 BUILD_DIR=build
 INCLUDE=-Iinclude -Isrc
