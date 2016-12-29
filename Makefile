@@ -31,6 +31,7 @@ SOURCES+=isa/sta.c
 SOURCES+=isa/stx.c
 SOURCES+=isa/sty.c
 SOURCES+=isa/tax.c
+SOURCES+=isa/tay.c
 SOURCES+=isa/tsx.c
 SOURCES+=isa/txs.c
 SOURCES+=isa/tya.c
