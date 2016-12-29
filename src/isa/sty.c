@@ -7,7 +7,7 @@
 static void
 sty_zp(cpu *c, addressing_mode am) {
 	uint8_t dest = cpu_advance(c);
-	printf("\tSTY: X 0x%0.2x to addr 0x%0.4x\n", c->y, dest);
+	printf("\tSTY: Y 0x%0.2x to addr 0x%0.4x\n", c->y, dest);
 
 	cpu_write(c, dest, c->y);
 }
