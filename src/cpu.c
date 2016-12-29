@@ -116,18 +116,18 @@ cpu_read_paged_16(cpu *c, uint16_t address) {
 	return low | (high << 8);
 }
 
-uint8_t
-cpu_pop(cpu *c) {
-	cpu_tick_clock(c);
-
-	return c->mem[cpu_translate_address(c, c->s++ + 0x100)];
-}
-
 void
 cpu_push(cpu *c, uint8_t data) {
+	c->mem[cpu_translate_address(c, c->s + 0x100)] = data;
 	cpu_tick_clock(c);
+	c->s--;
+}
 
-	c->mem[cpu_translate_address(c, c->s-- + 0x100)] = data;
+uint8_t
+cpu_pull(cpu *c) {
+	c->s++;
+	cpu_tick_clock(c);
+	return c->mem[cpu_translate_address(c, c->s + 0x100)];
 }
 
 void

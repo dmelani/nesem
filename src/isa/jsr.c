@@ -13,8 +13,8 @@ jsr(cpu *c, addressing_mode am) {
 	
 	printf("\tJSR Dest: 0x%0.4x Ret: 0x%0.4x\n", addr, ret);
 
-	cpu_push(c, high);
-	cpu_push(c, low);
+	cpu_push(c, ret >> 8);
+	cpu_push(c, ret & 0xFF);
 	c->pc = addr;
 
 	cpu_tick_clock(c); /* Takes one cycle more */

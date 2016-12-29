@@ -36,8 +36,8 @@ void cpu_tick_clock(cpu *);
 
 uint8_t cpu_read(cpu *, uint16_t);
 void cpu_write(cpu *, uint16_t, uint8_t);
-uint8_t cpu_pop(cpu *);
 void cpu_push(cpu *, uint8_t);
+uint8_t cpu_pull(cpu *);
 uint8_t cpu_advance(cpu *);
 uint16_t cpu_read_paged_16(cpu *, uint16_t);
 void cpu_set_z(cpu *, uint8_t);
