@@ -12,8 +12,6 @@ lda(cpu *c, addressing_mode am) {
 		uint16_t addr = data | (cpu_advance(c) << 8);
 		printf("\tLDA: addr: 0x%0.4x\n", addr);
 		data = cpu_read(c, addr);
-		cpu_tick_clock(c); /* Takes two more cycles */
-		cpu_tick_clock(c);
 	}
 
 	c->a = data;
