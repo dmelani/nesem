@@ -13,6 +13,7 @@ SOURCES+=isa/bne.c
 SOURCES+=isa/bpl.c
 SOURCES+=isa/cld.c
 SOURCES+=isa/dex.c
+SOURCES+=isa/dey.c
 SOURCES+=isa/inc.c
 SOURCES+=isa/inx.c
 SOURCES+=isa/iny.c
