@@ -15,9 +15,9 @@ inx(cpu *c, addressing_mode am) {
 	} else {
 		c->p &= ~CPU_FLAG_Z;
 	}
+	cpu_tick_clock(c); /* Takes one cycle more */
 
 	printf("\tINX: 0x%0.2x Flags: 0x%0.2x\n", c->x, c->p);
-	cpu_tick_clock(c); /* Takes one cycle more */
 }
 
 ADD_INSTRUCTION(0xe8, INX, IMPLIED, inx);
