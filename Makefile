@@ -10,6 +10,7 @@ SOURCES+=isa/isa.c
 SOURCES+=isa/cld.c
 SOURCES+=isa/inx.c
 SOURCES+=isa/jmp.c
+SOURCES+=isa/jsr.c
 SOURCES+=isa/lda.c
 SOURCES+=isa/ldx.c
 SOURCES+=isa/sei.c

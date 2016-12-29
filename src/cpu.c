@@ -102,6 +102,20 @@ cpu_write(cpu *c, uint16_t address, uint8_t data) {
 	c->mem[cpu_translate_address(c, address)] = data;
 }
 
+uint8_t
+cpu_pop(cpu *c) {
+	cpu_tick_clock(c);
+
+	return c->mem[cpu_translate_address(c, c->s++ + 0x100)];
+}
+
+void
+cpu_push(cpu *c, uint8_t data) {
+	cpu_tick_clock(c);
+
+	c->mem[cpu_translate_address(c, c->s-- + 0x100)] = data;
+}
+
 /* Local function definitions */
 
 static void

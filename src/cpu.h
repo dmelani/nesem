@@ -35,4 +35,6 @@ void cpu_run(cpu *);
 void cpu_tick_clock(cpu *);
 uint8_t cpu_read(cpu *, uint16_t);
 void cpu_write(cpu *, uint16_t, uint8_t);
+uint8_t cpu_pop(cpu *);
+void cpu_push(cpu *, uint8_t);
 uint8_t cpu_advance(cpu *);
