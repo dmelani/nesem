@@ -29,6 +29,10 @@ SRC_DIR=src
 CC=clang
 CFLAGS=-g -c -Wall -Werror $(INCLUDE)
 
+ifeq ($(shell uname -s),CYGWIN_NT-10.0)
+	CFLAGS+=-D__ELF__
+endif
+
 OBJS=$(SOURCES:%.c=$(BUILD_DIR)/%.o)
 DEPS=$(OBJS:%.o=%.d)
 

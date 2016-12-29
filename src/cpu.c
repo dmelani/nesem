@@ -1,3 +1,4 @@
+#include <inttypes.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -50,7 +51,7 @@ cpu_run(cpu *c) {
 	instr *ins;
 
 	while (true) {
-		printf("@%llu - ", c->clock);
+		printf("@%" PRIu64 " - ", c->clock);
 		opcode = cpu_advance(c);
 		
 		if (opcode >= c->optable_size) {
