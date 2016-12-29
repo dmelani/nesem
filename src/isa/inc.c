@@ -30,5 +30,5 @@ inc_zp(cpu *c, addressing_mode am) {
 	cpu_write(c, addr, data);
 }
 
-ADD_INSTRUCTION(0xe6, inc, ZERO_PAGE, inc_zp);
+ADD_INSTRUCTION(0xe6, INC, ZERO_PAGE, inc_zp);
 
