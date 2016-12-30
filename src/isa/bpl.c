@@ -6,11 +6,11 @@
 
 static void
 bpl(cpu *c, addressing_mode am) {
-	uint8_t offset = cpu_advance(c);
+	int8_t offset = cpu_advance(c);
 	printf("\tBPL: offset %0.2x ", offset);
 
 	if (c->p & CPU_FLAG_N) {
-		uint16_t rel_addr = c->pc + (0xFF00 | (uint16_t)offset);
+		uint16_t rel_addr = c->pc + offset;
 		cpu_tick_clock(c);
 		
 		/* Increment clock if ending up on new page */ 
