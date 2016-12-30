@@ -17,7 +17,7 @@ stx(cpu *c, addressing_mode am) {
 	uint8_t low = cpu_advance(c);
 	uint8_t high = cpu_advance(c);
 	uint16_t addr = low | (high << 8);
-	printf("\tSTX: X 0x%0.2x to addr 0x%0.4x\n", c->a, addr);
+	printf("\tSTX: X 0x%0.2x to addr 0x%0.4x\n", c->x, addr);
 
 	cpu_write(c, addr, c->x);
 }
