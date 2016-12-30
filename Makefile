@@ -19,6 +19,7 @@ SOURCES+=isa/clc.c
 SOURCES+=isa/cld.c
 SOURCES+=isa/cli.c
 SOURCES+=isa/cmp.c
+SOURCES+=isa/cpx.c
 SOURCES+=isa/dex.c
 SOURCES+=isa/dey.c
 SOURCES+=isa/inc.c
