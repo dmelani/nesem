@@ -9,6 +9,7 @@ SOURCES+=nrom.c
 SOURCES+=isa/isa.c
 SOURCES+=isa/bit.c
 SOURCES+=isa/bmi.c
+SOURCES+=isa/bcs.c
 SOURCES+=isa/bne.c
 SOURCES+=isa/bpl.c
 SOURCES+=isa/cli.c
