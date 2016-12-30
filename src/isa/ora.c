@@ -12,6 +12,8 @@ ora(cpu *c, addressing_mode am) {
 	if (am == ABSOLUTE) {
 		uint16_t addr = data | (cpu_advance(c) << 8);
 		data = cpu_read(c, addr);
+	} else if (am == ZERO_PAGE) {
+		data = cpu_read(c, data);
 	}
 
 	c->a |= data;
@@ -24,4 +26,5 @@ ora(cpu *c, addressing_mode am) {
 
 ADD_INSTRUCTION(0x0d, ORA, ABSOLUTE, ora);
 ADD_INSTRUCTION(0x09, ORA, IMMEDIATE, ora);
+ADD_INSTRUCTION(0x05, ORA, ZERO_PAGE, ora);
 

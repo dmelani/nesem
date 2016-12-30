@@ -12,6 +12,8 @@ eor(cpu *c, addressing_mode am) {
 	if (am == ABSOLUTE) {
 		uint16_t addr = data | (cpu_advance(c) << 8);
 		data = cpu_read(c, addr);
+	} else if (am == ZERO_PAGE) {
+		data = cpu_read(c, data);
 	}
 
 	c->a ^= data;
@@ -22,6 +24,7 @@ eor(cpu *c, addressing_mode am) {
 	printf("\tEOR: 0x%0.2x | 0x%0.2x = 0x%0.2x Flags: 0x%0.2x\n", prev, data, c->a, c->p);
 }
 
-ADD_INSTRUCTION(0x4d, ORA, ABSOLUTE, eor);
-ADD_INSTRUCTION(0x49, ORA, IMMEDIATE, eor);
+ADD_INSTRUCTION(0x4d, EOR, ABSOLUTE, eor);
+ADD_INSTRUCTION(0x49, EOR, IMMEDIATE, eor);
+ADD_INSTRUCTION(0x45, EOR, ZERO_PAGE, eor);
 
