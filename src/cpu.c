@@ -51,7 +51,7 @@ cpu_run(cpu *c) {
 	instr *ins;
 
 	while (true) {
-		printf("@%" PRIu64 " - ", c->clock);
+		printf("@%" PRIu64 " PC: 0x%0.4x - ", c->clock, c->pc);
 		opcode = cpu_advance(c);
 		
 		if (opcode >= c->optable_size) {
