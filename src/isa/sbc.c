@@ -8,7 +8,7 @@ static void
 sbc(cpu *c, addressing_mode am) {
 	uint8_t data = cpu_advance(c);
 	uint8_t carry = c->p & CPU_FLAG_C;
-	uint16_t tmp = c->a - data - ( c ? 0 : 1);
+	uint16_t tmp = c->a - data - (c ? 0 : 1);
 
 	printf("\tSBC: 0x%0.2x - 0x%0.2x - 0x%0.1x = ", c->a, data, carry ? 0 : 1);
 
