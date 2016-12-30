@@ -9,7 +9,7 @@ bcs(cpu *c, addressing_mode am) {
 	uint8_t offset = cpu_advance(c);
 	printf("\tBCS: offset %0.2x ", offset);
 
-	if ((c->p & CPU_FLAG_C) == 0) {
+	if ((c->p & CPU_FLAG_C) == 1) {
 		uint16_t rel_addr = c->pc + (0xFF00 | (uint16_t)offset);
 		cpu_tick_clock(c);
 		
