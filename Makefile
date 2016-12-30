@@ -7,6 +7,7 @@ SOURCES+=mapper.c
 SOURCES+=cartridge.c
 SOURCES+=nrom.c
 SOURCES+=isa/isa.c
+SOURCES+=isa/bcc.c
 SOURCES+=isa/bcs.c
 SOURCES+=isa/beq.c
 SOURCES+=isa/bit.c
