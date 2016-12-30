@@ -25,6 +25,7 @@ SOURCES+=isa/jsr.c
 SOURCES+=isa/lda.c
 SOURCES+=isa/ldx.c
 SOURCES+=isa/ldy.c
+SOURCES+=isa/lsr.c
 SOURCES+=isa/ora.c
 SOURCES+=isa/pha.c
 SOURCES+=isa/php.c
