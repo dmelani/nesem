@@ -62,9 +62,25 @@ sta_absolute_x(cpu *c, addressing_mode am) {
 	cpu_write(c, addr, c->a);
 }
 
+static void
+sta_absolute_y(cpu *c, addressing_mode am) {
+	uint8_t low = cpu_advance(c);
+	uint8_t high = cpu_advance(c);
+	uint16_t addr;
+
+	uint8_t ea_low = low + c->y;
+	addr = ea_low | (high << 8);
+	cpu_read(c, addr);
+
+	printf("\tSTA (0x%0.2x),0x%0.2x: A 0x%0.2x to addr 0x%0.4x\n", low | (high << 8), c->y, c->a, addr);
+
+	cpu_write(c, addr, c->a);
+}
+
 ADD_INSTRUCTION(0x85, STA, ZERO_PAGE, sta_zero_page);
 ADD_INSTRUCTION(0x8d, STA, ABSOLUTE, sta);
 ADD_INSTRUCTION(0x91, STA, INDIRECT_INDEXED, sta_indirect_indexed);
 ADD_INSTRUCTION(0x95, STA, INDEXED_ZERO_PAGE_X, sta_zero_page_x);
 ADD_INSTRUCTION(0x9d, STA, INDEXED_ABSOLUTE_X, sta_absolute_x);
+ADD_INSTRUCTION(0x99, STA, INDEXED_ABSOLUTE_Y, sta_absolute_y);
 
