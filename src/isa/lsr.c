@@ -8,7 +8,6 @@ static void
 lsr(cpu *c, addressing_mode am) {
 	uint8_t low = 0x00;
 	uint16_t addr = 0x00;	
-	uint8_t prev = c->p;
 	uint8_t data;
 	
 	/* Load */
