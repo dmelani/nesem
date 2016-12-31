@@ -9,13 +9,11 @@ jmp(cpu *c, addressing_mode am) {
 	uint8_t low = cpu_advance(c);
 	uint8_t high = cpu_advance(c);
 	uint16_t addr = low | (high << 8);
-	printf("\tJMP %0.4x : high %0.2x low %0.2x\n", addr, high, low);
 
-	if (am == ABSOLUTE_INDIRECT) {
+	if (am == ABSOLUTE_INDIRECT)
 		addr = cpu_read_paged_16(c, addr);
-		printf("ABSOLUTE INDIRECT JMP %0.4x : high %0.2x low %0.2x\n", addr, high, low);
-	}
 
+	printf("\tJMP %0.4x : high %0.2x low %0.2x\n", addr, high, low);
 	c->pc = addr;
 }
 
