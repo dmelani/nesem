@@ -9,7 +9,7 @@ beq(cpu *c, addressing_mode am) {
 	int8_t offset = cpu_advance(c);
 	printf("\tBEQ: offset %0.2x ", offset);
 
-	if ((c->p & CPU_FLAG_Z) == 1) {
+	if (c->p & CPU_FLAG_Z) {
 		int16_t rel_addr = c->pc + offset;
 		cpu_tick_clock(c);
 		
