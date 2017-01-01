@@ -18,9 +18,20 @@ lda(cpu *c, addressing_mode am) {
 		printf("(0x%0.2x)", data);
 		data = cpu_read(c, data);
 	} else if (am == INDEXED_ABSOLUTE_X) {
-		uint8_t high = cpu_advance(c); //data | (cpu_advance(c) << 8);
+		uint8_t high = cpu_advance(c);
 
 		uint16_t addr = (data | (high << 8)) + c->x;
+		if (addr >> 8 != high) {
+			printf("+");
+			cpu_read(c, (high << 8) | (addr & 0xFF));
+		}
+
+		printf("(0x%0.4x)", addr);
+		data = cpu_read(c, addr);
+	} else if (am == INDEXED_ABSOLUTE_Y) {
+		uint8_t high = cpu_advance(c);
+
+		uint16_t addr = (data | (high << 8)) + c->y;
 		if (addr >> 8 != high) {
 			printf("+");
 			cpu_read(c, (high << 8) | (addr & 0xFF));
@@ -55,4 +66,5 @@ ADD_INSTRUCTION(0xa5, LDA, ZERO_PAGE, lda);
 ADD_INSTRUCTION(0xa9, LDA, IMMEDIATE, lda);
 ADD_INSTRUCTION(0xad, LDA, ABSOLUTE, lda);
 ADD_INSTRUCTION(0xbd, LDA, INDEXED_ABSOLUTE_X, lda);
+ADD_INSTRUCTION(0xb9, LDA, INDEXED_ABSOLUTE_Y, lda);
 ADD_INSTRUCTION(0xb1, LDA, INDIRECT_INDEXED, lda);
