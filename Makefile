@@ -8,6 +8,7 @@ SOURCES+=cartridge.c
 SOURCES+=nrom.c
 SOURCES+=isa/isa.c
 SOURCES+=isa/adc.c
+SOURCES+=isa/asl.c
 SOURCES+=isa/bcc.c
 SOURCES+=isa/bcs.c
 SOURCES+=isa/beq.c
