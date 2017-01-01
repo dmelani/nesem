@@ -5,9 +5,10 @@
 
 static void
 sta(cpu *c, addressing_mode am) {
+	printf("\tSTA: ");
 	uint8_t addr = isa_load_read(c, am);
 
-	printf("\tSTA: A 0x%0.2x to addr 0x%0.4x\n", c->a, addr);
+	printf("A 0x%0.2x to addr 0x%0.4x\n", c->a, addr);
 	cpu_write(c, addr, c->a);
 }
 
