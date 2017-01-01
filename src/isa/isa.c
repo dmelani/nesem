@@ -136,3 +136,80 @@ isa_load_read(cpu *c, addressing_mode am) {
 	printf("(0x%0.4x) ", data);
 	return data;
 }
+
+uint8_t
+isa_load_write(cpu *c, addressing_mode am) {
+	uint8_t data = cpu_advance(c);
+	uint8_t low;
+	uint8_t high;
+	uint8_t addr;
+	uint8_t zpa;
+
+	/* Load */
+	switch (am) {
+		case IMMEDIATE:
+			printf("#0x%0.2x ", data);
+			return data;
+		case ABSOLUTE:
+			low = data;
+			addr = low | (cpu_advance(c) << 8);
+
+			break;
+		case ZERO_PAGE:
+			addr = data;
+
+			break;
+		case INDEXED_ZERO_PAGE_X:
+			low = data;
+
+			cpu_read(c, low); 
+			low += c->x;
+
+			addr = low;
+
+			break;
+		case INDEXED_ABSOLUTE_X:
+			low = data;
+			high = cpu_advance(c);
+
+			addr = (low | (high << 8)) + c->x;
+			cpu_read(c, addr);
+
+			break;
+		case INDEXED_ABSOLUTE_Y:
+			low = data;
+			high = cpu_advance(c);
+
+			addr = (low | (high << 8)) + c->y;
+			cpu_read(c, addr);
+
+			break;
+		case INDEXED_INDIRECT:
+			zpa = data;
+			cpu_read(c, zpa);
+			zpa += c->x;
+
+			low = cpu_read(c, zpa++);
+			high = cpu_read(c, zpa);
+
+			addr = (low | (high << 8));
+		
+			break;
+		case INDIRECT_INDEXED:
+			zpa = data;
+
+			low = cpu_read(c, zpa++);
+			high = cpu_read(c, zpa);
+
+			addr = (low | (high << 8)) + c->y;
+			cpu_read(c, addr);
+
+			break;
+		default:
+			printf("UNHANDLED ADDRESSING MODE\n");
+			return 0;
+	}
+	
+	printf("(0x%0.4x) ", addr);
+	return addr;
+}

@@ -31,6 +31,7 @@ typedef struct instr {
 size_t isa_op_table(instr ***);
 
 uint8_t isa_load_read(cpu *, addressing_mode);
+uint8_t isa_load_write(cpu *, addressing_mode);
 
 #define ADD_INSTRUCTION(opcode, name, mode, func)		\
 static instr __ins_##name##_##opcode = {			\
