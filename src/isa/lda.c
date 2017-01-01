@@ -6,53 +6,9 @@
 
 static void
 lda(cpu *c, addressing_mode am) {
-	uint8_t data = cpu_advance(c);
+	uint8_t data = isa_load_read(c, am);
+
 	printf("\tLDA ");
-
-	if (am == ABSOLUTE) {
-		uint16_t addr = data | (cpu_advance(c) << 8);
-
-		printf("(0x%0.4x)", addr);
-		data = cpu_read(c, addr);
-	} else if (am == ZERO_PAGE) {
-		printf("(0x%0.2x)", data);
-		data = cpu_read(c, data);
-	} else if (am == INDEXED_ABSOLUTE_X) {
-		uint8_t high = cpu_advance(c);
-
-		uint16_t addr = (data | (high << 8)) + c->x;
-		if (addr >> 8 != high) {
-			printf("+");
-			cpu_read(c, (high << 8) | (addr & 0xFF));
-		}
-
-		printf("(0x%0.4x)", addr);
-		data = cpu_read(c, addr);
-	} else if (am == INDEXED_ABSOLUTE_Y) {
-		uint8_t high = cpu_advance(c);
-
-		uint16_t addr = (data | (high << 8)) + c->y;
-		if (addr >> 8 != high) {
-			printf("+");
-			cpu_read(c, (high << 8) | (addr & 0xFF));
-		}
-
-		printf("(0x%0.4x)", addr);
-		data = cpu_read(c, addr);
-	} else if (am == INDIRECT_INDEXED) {
-		uint8_t zpa = cpu_read(c, data);
-		uint8_t low = cpu_read(c, zpa++);
-		uint8_t high = cpu_read(c, zpa);
-
-		uint16_t addr = (low | (high << 8)) + c->y;
-		if (addr >> 8 != high) {
-			printf("+");
-			cpu_read(c, (high << 8) | (addr & 0xFF));
-		}
-
-		printf("(0x%0.2x -> 0x%0.4x)", zpa, addr);
-		data = cpu_read(c, addr);
-	}
 
 	c->a = data;
 
@@ -62,9 +18,11 @@ lda(cpu *c, addressing_mode am) {
 	printf(": 0x%0.2x Flags: 0x%0.2x\n", data, c->p);
 }
 
-ADD_INSTRUCTION(0xa5, LDA, ZERO_PAGE, lda);
 ADD_INSTRUCTION(0xa9, LDA, IMMEDIATE, lda);
+ADD_INSTRUCTION(0xa5, LDA, ZERO_PAGE, lda);
+ADD_INSTRUCTION(0xb5, LDA, INDEXED_ZERO_PAGE_X, lda);
 ADD_INSTRUCTION(0xad, LDA, ABSOLUTE, lda);
 ADD_INSTRUCTION(0xbd, LDA, INDEXED_ABSOLUTE_X, lda);
 ADD_INSTRUCTION(0xb9, LDA, INDEXED_ABSOLUTE_Y, lda);
+ADD_INSTRUCTION(0xa1, LDA, INDEXED_INDIRECT, lda);
 ADD_INSTRUCTION(0xb1, LDA, INDIRECT_INDEXED, lda);

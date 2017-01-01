@@ -1,6 +1,6 @@
 #include <stdint.h>
 
-#include "linker_set.h"
+#include "cpu.h"
 #include "isa.h"
 #include "util.h"
 
@@ -47,4 +47,99 @@ isa_op_table(instr ***table) {
 
 	*table = t;
 	return UINT8_MAX + 1;
+}
+
+uint8_t
+isa_load_read(cpu *c, addressing_mode am) {
+	uint8_t data = cpu_advance(c);
+	uint8_t low;
+	uint8_t high;
+	uint8_t addr;
+	uint8_t zpa;
+
+	/* Load */
+	switch (am) {
+		case IMMEDIATE:
+	 		break;
+		case ABSOLUTE:
+			low = cpu_advance(c); 
+			addr = low | (cpu_advance(c) << 8);
+
+			data = cpu_read(c, addr);
+
+			break;
+		case ZERO_PAGE:
+			low = data;
+			data = cpu_read(c, low);
+
+			break;
+		case INDEXED_ZERO_PAGE_X:
+			low = data;
+
+			low = cpu_read(c, low); // According to http://nesdev.com/6502_cpu.txt
+			low += c->x;
+
+			data = cpu_read(c, low);
+
+			break;
+		case INDEXED_ABSOLUTE_X:
+			low = data;
+			high = cpu_advance(c);
+
+			addr = (low | (high << 8)) + c->x;
+			if (addr >> 8 != high) {
+				printf("+");
+				cpu_read(c, (high << 8) | (addr & 0xFF));
+			}
+
+			data = cpu_read(c, addr);
+
+			break;
+		case INDEXED_ABSOLUTE_Y:
+			low = data;
+			high = cpu_advance(c);
+
+			addr = (low | (high << 8)) + c->y;
+			if (addr >> 8 != high) {
+				printf("+");
+				cpu_read(c, (high << 8) | (addr & 0xFF));
+			}
+
+			data = cpu_read(c, addr);
+
+			break;
+		case INDEXED_INDIRECT:
+			zpa = data;
+			cpu_read(c, zpa);
+			zpa += c->x;
+
+			low = cpu_read(c, zpa++);
+			high = cpu_read(c, zpa);
+
+			addr = (low | (high << 8));
+			data = cpu_read(c, addr);
+		
+			break;
+		case INDIRECT_INDEXED:
+			zpa = data;
+			cpu_read(c, zpa);
+
+			low = cpu_read(c, zpa++);
+			high = cpu_read(c, zpa);
+
+			addr = (low | (high << 8)) + c->y;
+			if (addr >> 8 != high) {
+				printf("+");
+				cpu_read(c, (high << 8) | (addr & 0xFF));
+			}
+
+			data = cpu_read(c, addr);
+		
+			break;
+		default:
+			printf("UNHANDLED ADDRESSING MODE\n");
+			return 0;
+	}
+	
+	return data;
 }
