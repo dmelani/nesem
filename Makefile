@@ -23,6 +23,7 @@ SOURCES+=isa/bvs.c
 SOURCES+=isa/clc.c
 SOURCES+=isa/cld.c
 SOURCES+=isa/cli.c
+SOURCES+=isa/clv.c
 SOURCES+=isa/cmp.c
 SOURCES+=isa/cpx.c
 SOURCES+=isa/cpy.c
