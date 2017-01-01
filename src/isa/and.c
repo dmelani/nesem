@@ -2,7 +2,6 @@
 
 #include "cpu.h"
 #include "isa.h"
-#include "linker_set.h"
 
 static void
 and(cpu *c, addressing_mode am) {
@@ -14,7 +13,7 @@ and(cpu *c, addressing_mode am) {
 	cpu_set_n(c, c->a);
 	cpu_set_z(c, c->a);
 
-	printf("\tAND: 0x%0.2x | 0x%0.2x = 0x%0.2x Flags: 0x%0.2x\n", prev, data, c->a, c->p);
+	printf("\tAND: 0x%0.2x & 0x%0.2x = 0x%0.2x Flags: 0x%0.2x\n", prev, data, c->a, c->p);
 }
 
 ADD_INSTRUCTION(0x29, AND, IMMEDIATE, and);
