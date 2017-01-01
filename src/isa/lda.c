@@ -6,9 +6,8 @@
 
 static void
 lda(cpu *c, addressing_mode am) {
-	uint8_t data = isa_load_read(c, am);
-
 	printf("\tLDA ");
+	uint8_t data = isa_load_read(c, am);
 
 	c->a = data;
 

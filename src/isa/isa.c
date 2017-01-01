@@ -60,26 +60,24 @@ isa_load_read(cpu *c, addressing_mode am) {
 	/* Load */
 	switch (am) {
 		case IMMEDIATE:
-	 		break;
+			printf("#0x%0.2x ", data);
+			return data;
 		case ABSOLUTE:
-			low = cpu_advance(c); 
+			low = data;
 			addr = low | (cpu_advance(c) << 8);
-
-			data = cpu_read(c, addr);
 
 			break;
 		case ZERO_PAGE:
-			low = data;
-			data = cpu_read(c, low);
+			addr = data;
 
 			break;
 		case INDEXED_ZERO_PAGE_X:
 			low = data;
 
-			low = cpu_read(c, low); // According to http://nesdev.com/6502_cpu.txt
+			low = cpu_read(c, low); 
 			low += c->x;
 
-			data = cpu_read(c, low);
+			addr = low;
 
 			break;
 		case INDEXED_ABSOLUTE_X:
@@ -92,8 +90,6 @@ isa_load_read(cpu *c, addressing_mode am) {
 				cpu_read(c, (high << 8) | (addr & 0xFF));
 			}
 
-			data = cpu_read(c, addr);
-
 			break;
 		case INDEXED_ABSOLUTE_Y:
 			low = data;
@@ -105,8 +101,6 @@ isa_load_read(cpu *c, addressing_mode am) {
 				cpu_read(c, (high << 8) | (addr & 0xFF));
 			}
 
-			data = cpu_read(c, addr);
-
 			break;
 		case INDEXED_INDIRECT:
 			zpa = data;
@@ -117,7 +111,6 @@ isa_load_read(cpu *c, addressing_mode am) {
 			high = cpu_read(c, zpa);
 
 			addr = (low | (high << 8));
-			data = cpu_read(c, addr);
 		
 			break;
 		case INDIRECT_INDEXED:
@@ -133,13 +126,13 @@ isa_load_read(cpu *c, addressing_mode am) {
 				cpu_read(c, (high << 8) | (addr & 0xFF));
 			}
 
-			data = cpu_read(c, addr);
-		
 			break;
 		default:
 			printf("UNHANDLED ADDRESSING MODE\n");
 			return 0;
 	}
 	
+	data = cpu_read(c, addr);
+	printf("(0x%0.4x) ", data);
 	return data;
 }
