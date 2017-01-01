@@ -14,7 +14,7 @@ eor(cpu *c, addressing_mode am) {
 	cpu_set_n(c, c->a);
 	cpu_set_z(c, c->a);
 
-	printf("\tEOR: 0x%0.2x | 0x%0.2x = 0x%0.2x Flags: 0x%0.2x\n", prev, data, c->a, c->p);
+	printf("\tEOR: 0x%0.2x ^ 0x%0.2x = 0x%0.2x Flags: 0x%0.2x\n", prev, data, c->a, c->p);
 }
 
 ADD_INSTRUCTION(0x49, EOR, IMMEDIATE, eor);
