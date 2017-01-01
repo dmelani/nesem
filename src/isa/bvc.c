@@ -9,7 +9,7 @@ bvc(cpu *c, addressing_mode am) {
 	int8_t offset = cpu_advance(c);
 	printf("\tBVC: offset %0.2x Flag: 0x%0.2x ", offset, c->p);
 
-	if (c->p & CPU_FLAG_V == 0) {
+	if ((c->p & CPU_FLAG_V) == 0) {
 		uint16_t rel_addr = c->pc + offset;
 		cpu_tick_clock(c);
 		
@@ -26,5 +26,5 @@ bvc(cpu *c, addressing_mode am) {
 	printf("not branching\n");
 }
 
-ADD_INSTRUCTION(0x70, BVS, RELATIVE, bvs);
+ADD_INSTRUCTION(0x50, BVC, RELATIVE, bvc);
 
