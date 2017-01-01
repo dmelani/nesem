@@ -8,6 +8,11 @@ static void
 adc(cpu *c, addressing_mode am) {
 	uint8_t data = cpu_advance(c);
 	uint8_t carry = c->p & CPU_FLAG_C;
+
+	if (am == ZERO_PAGE) {
+		data = cpu_read(c, data);
+	}
+
 	uint16_t tmp = c->a + data + (carry ? 1 : 0);
 
 	printf("\tADC: 0x%0.2x + 0x%0.2x + 0x%0.1x = ", c->a, data, carry ? 1 : 0);
@@ -32,4 +37,5 @@ adc(cpu *c, addressing_mode am) {
 }
 
 ADD_INSTRUCTION(0x69, ADC, IMMEDIATE, adc);
+ADD_INSTRUCTION(0x65, ADC, ZERO_PAGE, adc);
 

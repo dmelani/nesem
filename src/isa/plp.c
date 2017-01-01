@@ -8,7 +8,7 @@ static void
 plp(cpu *c, addressing_mode am) {
 	(void) cpu_read(c, c->pc);
 	cpu_tick_clock(c);
-	c->p = cpu_pull(c);
+	cpu_set_p(c, cpu_pull(c));
 	printf("\tPLP: P:0x%0.2x, S:0x%0.2x\n", c->p, c->s);
 }
 

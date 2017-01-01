@@ -42,3 +42,4 @@ uint8_t cpu_advance(cpu *);
 uint16_t cpu_read_paged_16(cpu *, uint16_t);
 void cpu_set_z(cpu *, uint8_t);
 void cpu_set_n(cpu *, uint8_t);
+void cpu_set_p(cpu *, uint8_t);

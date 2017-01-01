@@ -145,6 +145,11 @@ cpu_set_n(cpu *c, uint8_t data) {
 	c->p |= data & CPU_FLAG_N; // Set N flag if x >= 128
 }
 
+void
+cpu_set_p(cpu *c, uint8_t data) {
+	c->p = data & (CPU_FLAG_C | CPU_FLAG_Z | CPU_FLAG_I | CPU_FLAG_D | CPU_FLAG_V | CPU_FLAG_N);
+}
+
 /* Local function definitions */
 
 static void
