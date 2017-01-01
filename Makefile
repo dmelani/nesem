@@ -17,6 +17,7 @@ SOURCES+=isa/bmi.c
 SOURCES+=isa/bne.c
 SOURCES+=isa/bpl.c
 SOURCES+=isa/brk.c
+SOURCES+=isa/bvc.c
 SOURCES+=isa/bvs.c
 SOURCES+=isa/clc.c
 SOURCES+=isa/cld.c
