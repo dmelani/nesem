@@ -217,6 +217,7 @@ isa_load_write_addr(cpu *c, addressing_mode am) {
 uint16_t
 isa_load_read_write_addr(cpu *c, addressing_mode am) {
 	uint8_t low = cpu_advance(c);
+	uint8_t high;
 	uint16_t addr = 0x00;	
 	uint8_t data;
 	/* Load */
@@ -242,7 +243,7 @@ isa_load_read_write_addr(cpu *c, addressing_mode am) {
 
 			break;
 		case INDEXED_ABSOLUTE_X:
-			uint8_t high = cpu_advance(c);
+			high = cpu_advance(c);
 			low += c->x;
 
 			addr = low;
@@ -255,7 +256,7 @@ isa_load_read_write_addr(cpu *c, addressing_mode am) {
 			break;
 		default:
 			printf("UNHANDLED ADDRESSING MODE\n");
-			return;
+			return 0x0000;
 	}
 
 	printf("(0x%0.4x) ", addr);

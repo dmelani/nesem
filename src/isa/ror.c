@@ -7,7 +7,7 @@
 static void
 ror(cpu *c, addressing_mode am) {
 	printf("\tROR: ");
-	uint16_t addr = isa_load_write_addr(c);	
+	uint16_t addr = isa_load_write_addr(c, am);	
 	uint8_t prev = c->p;
 	uint8_t data;
 	
@@ -15,7 +15,10 @@ ror(cpu *c, addressing_mode am) {
 	if (am == ACCUMULATOR) {
 			cpu_read(c, c->pc);
 			data = c->a;
+	} else {
+		data = cpu_read(c, addr);
 	}
+
 	/* Op */
 	printf("0x%0.2x -> ", data);
 
@@ -44,10 +47,10 @@ ror(cpu *c, addressing_mode am) {
 			cpu_write(c, addr, data);
 			break;
 		case ZERO_PAGE:
-			cpu_write(c, low, data);
+			cpu_write(c, addr & 0xFF, data);
 			break;
 		case INDEXED_ZERO_PAGE_X:
-			cpu_write(c, low, data);
+			cpu_write(c, addr & 0xFF, data);
 			break;
 		default:
 			printf("UNHANDLED ADDRESSING MODE\n");
