@@ -10,12 +10,6 @@ inc(cpu *c, addressing_mode am) {
 	uint16_t addr = isa_load_read_write_addr(c, am);
 	uint8_t data = cpu_read(c, addr);
 
-	/*
-	 * According to  http://nesdev.com/6502_cpu.txt:
-	 * Read-Modify-Write instructions write unmodified data, then modified
-	 * (so INC effectively does LDX loc;STX loc;INX;STX loc)
-	 */
-
 	printf("(0x%0.4x) 0x%0.2x ", addr, data);
 	cpu_write(c, addr, data++);
 	printf("to 0x%0.2x\n", data);
