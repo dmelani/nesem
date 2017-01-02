@@ -6,17 +6,8 @@
 
 static void
 ldy(cpu *c, addressing_mode am) {
-	uint8_t data = cpu_advance(c);
 	printf("\tLDY ");
-
-	if (am == ABSOLUTE) {
-		uint16_t addr = data | (cpu_advance(c) << 8);
-		printf("(0x%0.4x)", addr);
-		data = cpu_read(c, addr);
-	} else if (am == ZERO_PAGE) {
-		printf("(0x%0.2x)", data);
-		data = cpu_read(c, data);
-	}
+	uint8_t data = isa_load_read(c, am);
 
 	c->y = data;
 
@@ -28,5 +19,7 @@ ldy(cpu *c, addressing_mode am) {
 
 ADD_INSTRUCTION(0xa0, LDY, IMMEDIATE, ldy);
 ADD_INSTRUCTION(0xa4, LDY, ZERO_PAGE, ldy);
+ADD_INSTRUCTION(0xb4, LDX, INDEXED_ZERO_PAGE_X, ldy);
 ADD_INSTRUCTION(0xac, LDY, ABSOLUTE, ldy);
+ADD_INSTRUCTION(0xbc, LDX, INDEXED_ABSOLUTE_X, ldy);
 
