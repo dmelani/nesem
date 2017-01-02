@@ -2,20 +2,16 @@
 
 #include "cpu.h"
 #include "isa.h"
-#include "linker_set.h"
 
 static void
 adc(cpu *c, addressing_mode am) {
-	uint8_t data = cpu_advance(c);
+	printf("\tADC: ");
+	uint8_t data = isa_load_read(c);
+
 	uint8_t carry = c->p & CPU_FLAG_C;
-
-	if (am == ZERO_PAGE) {
-		data = cpu_read(c, data);
-	}
-
 	uint16_t tmp = c->a + data + (carry ? 1 : 0);
 
-	printf("\tADC: 0x%0.2x + 0x%0.2x + 0x%0.1x = ", c->a, data, carry ? 1 : 0);
+	printf("0x%0.2x + 0x%0.2x + 0x%0.1x = ", c->a, data, carry ? 1 : 0);
 
 	cpu_set_n(c, tmp & 0xFF);
 	cpu_set_z(c, tmp & 0xFF);
@@ -38,4 +34,10 @@ adc(cpu *c, addressing_mode am) {
 
 ADD_INSTRUCTION(0x69, ADC, IMMEDIATE, adc);
 ADD_INSTRUCTION(0x65, ADC, ZERO_PAGE, adc);
+ADD_INSTRUCTION(0x75, ADC, INDEXED_ZERO_PAGE_X, adc);
+ADD_INSTRUCTION(0x6d, ADC, ABSOLUTE, adc);
+ADD_INSTRUCTION(0x7d, ADC, INDEXED_ABSOLUTE_X, adc);
+ADD_INSTRUCTION(0x79, ADC, INDEXED_ZERO_PAGE_Y, adc);
+ADD_INSTRUCTION(0x61, ADC, INDEXED_INDIRECT, adc);
+ADD_INSTRUCTION(0x71, ADC, INDIRECT_INDEXED, adc);
 
