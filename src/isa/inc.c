@@ -5,8 +5,9 @@
 #include "linker_set.h"
 
 static void
-inc_zp(cpu *c, addressing_mode am) {
-	uint8_t addr = cpu_advance(c);
+inc(cpu *c, addressing_mode am) {
+	printf("\tINC: ");
+	uint16_t addr = isa_load_read_write_addr(c, am);
 	uint8_t data = cpu_read(c, addr);
 
 	/*
@@ -15,7 +16,7 @@ inc_zp(cpu *c, addressing_mode am) {
 	 * (so INC effectively does LDX loc;STX loc;INX;STX loc)
 	 */
 
-	printf("\tINC (0x00%0.2x): 0x%0.2x ", addr, data);
+	printf("(0x%0.4x) 0x%0.2x ", addr, data);
 	cpu_write(c, addr, data++);
 	printf("to 0x%0.2x\n", data);
 
@@ -25,5 +26,8 @@ inc_zp(cpu *c, addressing_mode am) {
 	cpu_write(c, addr, data);
 }
 
-ADD_INSTRUCTION(0xe6, INC, ZERO_PAGE, inc_zp);
+ADD_INSTRUCTION(0xe6, INC, ZERO_PAGE, inc);
+ADD_INSTRUCTION(0xf6, INC, INDEXED_ZERO_PAGE_X, inc);
+ADD_INSTRUCTION(0xee, INC, ABSOLUTE, inc);
+ADD_INSTRUCTION(0xfe, INC, INDEXED_ABSOLUTE_X, inc);
 
