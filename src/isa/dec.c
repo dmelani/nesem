@@ -4,11 +4,12 @@
 #include "isa.h"
 
 static void
-dec_zp(cpu *c, addressing_mode am) {
-	uint8_t addr = cpu_advance(c);
+dec(cpu *c, addressing_mode am) {
+	printf("\tDEC: ");
+	uint16_t addr = isa_load_read_write_addr(c, am);
 	uint8_t data = cpu_read(c, addr);
 
-	printf("\tDEC (0x00%0.2x): 0x%0.2x ", addr, data);
+	printf("(0x%0.4x) 0x%0.2x ", addr, data);
 	cpu_write(c, addr, data--);
 	printf("to 0x%0.2x\n", data);
 
@@ -18,5 +19,8 @@ dec_zp(cpu *c, addressing_mode am) {
 	cpu_write(c, addr, data);
 }
 
-ADD_INSTRUCTION(0xc6, DEC, ZERO_PAGE, dec_zp);
+ADD_INSTRUCTION(0xc6, DEC, ZERO_PAGE, dec);
+ADD_INSTRUCTION(0xd6, DEC, INDEXED_ZERO_PAGE_X, dec);
+ADD_INSTRUCTION(0xce, DEC, ABSOLUTE, dec);
+ADD_INSTRUCTION(0xde, DEC, INDEXED_ABSOLUTE_X, dec);
 
