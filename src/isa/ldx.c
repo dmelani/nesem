@@ -2,21 +2,11 @@
 
 #include "cpu.h"
 #include "isa.h"
-#include "linker_set.h"
 
 static void
 ldx(cpu *c, addressing_mode am) {
-	uint8_t data = cpu_advance(c);
 	printf("\tLDX ");
-
-	if (am == ABSOLUTE) {
-		uint16_t addr = data | (cpu_advance(c) << 8);
-		printf("(0x%0.4x)", addr);
-		data = cpu_read(c, addr);
-	} else if (am == ZERO_PAGE) {
-		printf("(0x%0.2x)", data);
-		data = cpu_read(c, data);
-	}
+	uint8_t data = isa_load_read(c, am);
 
 	c->x = data;
 
@@ -27,5 +17,7 @@ ldx(cpu *c, addressing_mode am) {
 }
 
 ADD_INSTRUCTION(0xa2, LDX, IMMEDIATE, ldx);
-ADD_INSTRUCTION(0xa6, LDA, ZERO_PAGE, ldx);
-ADD_INSTRUCTION(0xae, LDA, ABSOLUTE, ldx);
+ADD_INSTRUCTION(0xa6, LDX, ZERO_PAGE, ldx);
+ADD_INSTRUCTION(0xb6, LDX, INDEXED_ZERO_PAGE_Y, ldx);
+ADD_INSTRUCTION(0xae, LDX, ABSOLUTE, ldx);
+ADD_INSTRUCTION(0xbe, LDX, INDEXED_ABSOLUTE_Y, ldx);

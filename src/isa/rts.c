@@ -20,7 +20,7 @@ rts(cpu *c, addressing_mode am) {
 	c->pc++;
 	cpu_tick_clock(c); /* Takes one cycle more */
 
-	printf("\tRST Ret: 0x%0.4x\n", c->pc);
+	printf("\tRTS Ret: 0x%0.4x\n", c->pc);
 }
 
 ADD_INSTRUCTION(0x60, RTS, IMPLIED, rts);

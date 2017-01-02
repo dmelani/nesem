@@ -6,9 +6,9 @@
 static void
 stx(cpu *c, addressing_mode am) {
 	printf("\tSTX: ");
-	uint8_t addr = isa_load_read(c, am);
+	uint16_t addr = isa_load_write_addr(c, am);
 
-	printf("\tSTX: X 0x%0.2x to addr 0x%0.4x\n", c->x, addr);
+	printf(" X 0x%0.2x to addr 0x%0.4x\n", c->x, addr);
 	cpu_write(c, addr, c->x);
 }
 

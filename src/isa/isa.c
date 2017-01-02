@@ -54,7 +54,7 @@ isa_load_read(cpu *c, addressing_mode am) {
 	uint8_t data = cpu_advance(c);
 	uint8_t low;
 	uint8_t high;
-	uint8_t addr;
+	uint16_t addr;
 	uint8_t zpa;
 
 	/* Load */
@@ -132,17 +132,17 @@ isa_load_read(cpu *c, addressing_mode am) {
 			return 0;
 	}
 	
+	printf("(0x%0.4x) ", addr);
 	data = cpu_read(c, addr);
-	printf("(0x%0.4x) ", data);
 	return data;
 }
 
-uint8_t
-isa_load_write(cpu *c, addressing_mode am) {
+uint16_t
+isa_load_write_addr(cpu *c, addressing_mode am) {
 	uint8_t data = cpu_advance(c);
 	uint8_t low;
 	uint8_t high;
-	uint8_t addr;
+	uint16_t addr;
 	uint8_t zpa;
 
 	/* Load */

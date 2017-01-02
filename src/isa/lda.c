@@ -2,7 +2,6 @@
 
 #include "cpu.h"
 #include "isa.h"
-#include "linker_set.h"
 
 static void
 lda(cpu *c, addressing_mode am) {

@@ -7,7 +7,7 @@
 static void
 sty(cpu *c, addressing_mode am) {
 	printf("\tSTY: ");
-	uint8_t addr = isa_load_read(c, am);
+	uint8_t addr = isa_load_write_addr(c, am);
 
 	printf("Y 0x%0.2x to addr 0x%0.4x\n", c->y, addr);
 	cpu_write(c, addr, c->y);
