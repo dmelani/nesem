@@ -36,6 +36,7 @@ SOURCES+=isa/inx.c
 SOURCES+=isa/iny.c
 SOURCES+=isa/jmp.c
 SOURCES+=isa/jsr.c
+SOURCES+=isa/lax.c
 SOURCES+=isa/lda.c
 SOURCES+=isa/ldx.c
 SOURCES+=isa/ldy.c
