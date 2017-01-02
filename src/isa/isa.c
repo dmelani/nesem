@@ -80,6 +80,15 @@ isa_load_read(cpu *c, addressing_mode am) {
 			addr = low;
 
 			break;
+		case INDEXED_ZERO_PAGE_Y:
+			low = data;
+
+			low = cpu_read(c, low); 
+			low += c->y;
+
+			addr = low;
+
+			break;
 		case INDEXED_ABSOLUTE_X:
 			low = data;
 			high = cpu_advance(c);
