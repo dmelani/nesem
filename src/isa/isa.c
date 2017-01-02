@@ -213,3 +213,51 @@ isa_load_write_addr(cpu *c, addressing_mode am) {
 	printf("(0x%0.4x) ", addr);
 	return addr;
 }
+
+uint16_t
+isa_load_read_write_addr(cpu *c, addressing_mode am) {
+	uint8_t low = cpu_advance(c);
+	uint16_t addr = 0x00;	
+	uint8_t data;
+	/* Load */
+	switch (am) {
+		case ABSOLUTE:
+			addr = low | (cpu_advance(c) << 8);
+
+			data = cpu_read(c, addr);
+			cpu_write(c, addr, data);
+
+			break;
+		case ZERO_PAGE:
+			data = cpu_read(c, low);
+			cpu_write(c, low, data);
+
+			break;
+		case INDEXED_ZERO_PAGE_X:
+			cpu_read(c, low); // According to http://nesdev.com/6502_cpu.txt
+			low += c->x;
+
+			data = cpu_read(c, low);
+			cpu_write(c, low, data);
+
+			break;
+		case INDEXED_ABSOLUTE_X:
+			uint8_t high = cpu_advance(c);
+			low += c->x;
+
+			addr = low;
+			addr |= (high << 8);
+			cpu_read(c, addr); // According to http://nesdev.com/6502_cpu.txt this can happen before the previous step
+
+			data = cpu_read(c, addr);
+			cpu_write(c, addr, data); // According to http://nesdev.com/6502_cpu.txt
+
+			break;
+		default:
+			printf("UNHANDLED ADDRESSING MODE\n");
+			return;
+	}
+
+	printf("(0x%0.4x) ", addr);
+	return addr;
+}

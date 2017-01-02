@@ -32,6 +32,7 @@ size_t isa_op_table(instr ***);
 
 uint8_t isa_load_read(cpu *, addressing_mode);
 uint16_t isa_load_write_addr(cpu *, addressing_mode);
+uint16_t isa_load_read_write_addr(cpu *, addressing_mode);
 
 #define ADD_INSTRUCTION(opcode, name, mode, func)		\
 static instr __ins_##name##_##opcode = {			\
