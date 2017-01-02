@@ -6,7 +6,7 @@
 static void
 adc(cpu *c, addressing_mode am) {
 	printf("\tADC: ");
-	uint8_t data = isa_load_read(c);
+	uint8_t data = isa_load_read(c, am);
 
 	uint8_t carry = c->p & CPU_FLAG_C;
 	uint16_t tmp = c->a + data + (carry ? 1 : 0);
@@ -40,4 +40,3 @@ ADD_INSTRUCTION(0x7d, ADC, INDEXED_ABSOLUTE_X, adc);
 ADD_INSTRUCTION(0x79, ADC, INDEXED_ZERO_PAGE_Y, adc);
 ADD_INSTRUCTION(0x61, ADC, INDEXED_INDIRECT, adc);
 ADD_INSTRUCTION(0x71, ADC, INDIRECT_INDEXED, adc);
-
