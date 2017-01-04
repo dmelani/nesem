@@ -7,7 +7,7 @@
 static void
 ror(cpu *c, addressing_mode am) {
 	printf("\tROR: ");
-	uint16_t addr = isa_load_write_addr(c, am);	
+	uint16_t addr;
 	uint8_t prev = c->p;
 	uint8_t data;
 	
@@ -16,6 +16,7 @@ ror(cpu *c, addressing_mode am) {
 			cpu_read(c, c->pc);
 			data = c->a;
 	} else {
+		addr = isa_load_write_addr(c, am);	
 		data = cpu_read(c, addr);
 	}
 
