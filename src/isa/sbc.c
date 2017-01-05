@@ -9,7 +9,7 @@ sbc(cpu *c, addressing_mode am) {
 	printf("\tSBC: ");
 	uint8_t data = isa_load_read(c, am);
 	uint8_t carry = c->p & CPU_FLAG_C;
-	uint16_t tmp = c->a - data - (c ? 0 : 1);
+	uint16_t tmp = c->a - data - (carry ? 0 : 1);
 
 	printf("0x%0.2x - 0x%0.2x - 0x%0.1x = ", c->a, data, carry ? 0 : 1);
 
