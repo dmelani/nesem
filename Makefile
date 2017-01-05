@@ -30,6 +30,7 @@ SOURCES+=isa/cpy.c
 SOURCES+=isa/dec.c
 SOURCES+=isa/dex.c
 SOURCES+=isa/dey.c
+SOURCES+=isa/dcp.c
 SOURCES+=isa/eor.c
 SOURCES+=isa/inc.c
 SOURCES+=isa/inx.c
@@ -71,7 +72,7 @@ INCLUDE=-Iinclude -Isrc
 SRC_DIR=src
 
 CC=clang
-CFLAGS=-g -c -Wall -Werror $(INCLUDE)
+CFLAGS=-g -std=c11 -c -Wall -Werror $(INCLUDE)
 
 ifeq ($(shell uname -s),CYGWIN_NT-10.0)
 	CFLAGS+=-D__ELF__
