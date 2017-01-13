@@ -51,7 +51,7 @@ cpu_run(cpu *c) {
 	instr *ins;
 
 	while (true) {
-		printf("@%" PRIu64 " PC: 0x%0.4x - ", c->clock, c->pc);
+		printf("@%" PRIu64 " PC: %0.4x - ", c->clock, c->pc);
 		opcode = cpu_advance(c);
 		
 		if (opcode >= c->optable_size) {
@@ -61,7 +61,7 @@ cpu_run(cpu *c) {
 		}
 		ins = c->optable[opcode];
 		
-		printf("Processing instruction: %.2x -> %s in addressing mode \"%s\"\n", opcode, ins->name, addressing_mode_LUT[ins->mode]);
+		printf("%.2x ", opcode);
 		if (ins->exec == NULL) {
 			printf("Instruction %s with addressing mode %s not implemented\n", ins->name, addressing_mode_LUT[ins->mode]);
 			return;
@@ -107,10 +107,13 @@ uint16_t
 cpu_read_paged_16(cpu *c, uint16_t address) {
 	uint16_t page, offset, low, high;
 
-	page = address & ~0xFF;
-	offset = address & 0xFF;
+	page = address & 0xFF00;
+	offset = address & 0x00FF;
 
+	printf("\n DEBUG READ (0x%0.4x)\n", address);
+	printf("\n DEBUG READ 0x%0.4x %0.4x\n", page, offset);
 	low = cpu_read(c, page | offset++);
+	printf("\n DEBUG READ 0x%0.4x %0.4x\n", page,  offset);
 	high = cpu_read(c, page | (offset & 0xFF));
 	
 	return low | (high << 8);
@@ -165,7 +168,7 @@ cpu_powerup(cpu *c) {
 	memset(c->mem, 0x00, NES_MEM_MAP_SIZE);
 	memset(c->mem, 0xFF, NES_RAM_SIZE);
 
-	c->pc = cpu_read_reset_vector(c);
+	c->pc = 0xc000; // = cpu_read_reset_vector(c);
 
 	c->clock = 0;
 }
