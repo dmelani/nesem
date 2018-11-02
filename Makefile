@@ -58,6 +58,7 @@ SOURCES+=isa/sbc.c
 SOURCES+=isa/sec.c
 SOURCES+=isa/sed.c
 SOURCES+=isa/sei.c
+SOURCES+=isa/slo.c
 SOURCES+=isa/sta.c
 SOURCES+=isa/stx.c
 SOURCES+=isa/sty.c
