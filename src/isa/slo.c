@@ -13,13 +13,13 @@ slo(cpu *c, addressing_mode am) {
 	data <<= 1;
 	c->a |= data;
 
-	if (data & (0x01 << 7)) {
+	if (c->a & (0x01 << 7)) {
 		c->p |= CPU_FLAG_C;
 	} else {
 		c->p &= ~CPU_FLAG_C;
 	}
-	cpu_set_n(c, data);
-	cpu_set_z(c, data);
+	cpu_set_n(c, c->a);
+	cpu_set_z(c, c->a);
 
 	cpu_write(c, addr, data);
 
