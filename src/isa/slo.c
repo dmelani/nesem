@@ -9,6 +9,7 @@ slo(cpu *c, addressing_mode am) {
 	uint8_t data = cpu_read(c, addr);
 	uint8_t prev = data;
 	uint8_t aprev = c->a;
+	cpu_write(c, addr, data);
 
 	data <<= 1;
 	c->a |= data;
