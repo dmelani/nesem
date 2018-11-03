@@ -151,6 +151,7 @@ cpu_set_n(cpu *c, uint8_t data) {
 void
 cpu_set_p(cpu *c, uint8_t data) {
 	c->p = data & (CPU_FLAG_C | CPU_FLAG_Z | CPU_FLAG_I | CPU_FLAG_D | CPU_FLAG_V | CPU_FLAG_N);
+	c->p |= CPU_FLAG_U;
 }
 
 /* Local function definitions */
