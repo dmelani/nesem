@@ -49,6 +49,7 @@ SOURCES+=isa/pha.c
 SOURCES+=isa/php.c
 SOURCES+=isa/pla.c
 SOURCES+=isa/plp.c
+SOURCES+=isa/rra.c
 SOURCES+=isa/rla.c
 SOURCES+=isa/rol.c
 SOURCES+=isa/ror.c
